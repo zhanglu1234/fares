@@ -23,18 +23,26 @@ public class DriverController {
     ResultVo insertDriverInfo(@RequestBody DriverInfo driverInfo) {
         ResultVo resultVo = new ResultVo();
         try {
-            int state = driverInfoService.insert(driverInfo);
-            return resultVo.SUCCES(state);
+            int date = driverInfoService.insert(driverInfo);
+            return resultVo.SUCCES(date);
         } catch (Exception e) {
-            resultVo.Fail(400, "错误");
+            resultVo.Fail(400, "添加信息失败");
         }
         return resultVo;
     }
 
 
     @DeleteMapping("/deleteInfo")
-    int deleteInfo(@RequestParam Integer driverinfoid) {
-        return driverInfoService.deleteByPrimaryKey(driverinfoid);
+    ResultVo deleteInfo(@RequestParam Integer driverinfoid) {
+        ResultVo resultVo = new ResultVo();
+        try{
+            int date = driverInfoService.deleteByPrimaryKey(driverinfoid);
+            return resultVo.SUCCES(date);
+
+        }catch(Exception e){
+            resultVo.Fail(400,"删除失败");
+        }
+        return resultVo;
     }
 
 
