@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class TokenEntity {
 
 
-         public static String  token="43_KUzJcZcxquciqYZrOKjuMPmSmgqFrc7ZGwq7YypDLjhY1ZyYH18R9QEmZ-w7_Pju46pt4Uyr-G3skJ5o82lQgQt09_rKnQXyrYiL1PzjCzD1Y4_a5I4tJwWpNkBTGU0pdFDFSC3c5VhOOJ7JAMWgAFALXH";
+         public static String  token="43_vmiR8EP_z7Bymas0d_jt74rgLEzCcJdtNrJNnq-GiViLTmMkOV-sZE2HPELFz3iroLsr4tiXUaWKVtULZYjMp1pZT81eVmaQnmxw1MFhQiGygcO-X4jnjFXgT8tO2hSKvnKUXfNEgHZ2e02xAACdAEAKKM";
 
 
 }
