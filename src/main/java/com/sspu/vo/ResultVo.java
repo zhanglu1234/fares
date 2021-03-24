@@ -9,7 +9,8 @@ public class ResultVo<T> {
     private String msg;
     private T date;
 
-    public ResultVo SUCCES(T date) {
+
+    public ResultVo SUCCESS(T date) {
         this.code = 200;
         this.msg = "OK";
         this.date = date;
@@ -17,11 +18,10 @@ public class ResultVo<T> {
         return this;
     }
 
-    public ResultVo SCUSSE(T date,String msg){
+    public ResultVo SuccessLogin(){
 
         this.code=200;
-        this.msg=msg;
-        this.date=date;
+        this.msg="登录成功";
         return this;
     }
 
@@ -30,7 +30,6 @@ public class ResultVo<T> {
 
         this.code=code;
         this.msg=msg;
-        this.date=null;
         return this;
     }
 }

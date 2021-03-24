@@ -1,7 +1,9 @@
 package com.sspu;
 
 import com.mysql.cj.x.protobuf.Mysqlx;
+import com.sspu.entity.ClientInfo;
 import com.sspu.entity.DriverInfo;
+import com.sspu.mapper.ClientInfoMapper;
 import com.sspu.mapper.DriverInfoMapper;
 import com.sspu.wx.config.WxConfig;
 import com.sspu.wx.entity.TokenEntity;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -23,6 +26,16 @@ class FaresApplicationTests {
 
     @Autowired
     DriverInfoMapper driverInfoMapper;
+
+    @Autowired
+    ClientInfoMapper clientInfoMapper;
+    @Test
+    void contextLoads5() throws Exception{
+        List<ClientInfo> allClientInfo = clientInfoMapper.findAllClientInfo();
+        for (int i = 0; i <allClientInfo.size() ; i++) {
+            System.out.println(clientInfoMapper.findAllClientInfo().get(i).getClientuniqueid());
+        }
+    }
 
 
     @Resource

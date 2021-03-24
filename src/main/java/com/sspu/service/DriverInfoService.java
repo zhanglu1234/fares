@@ -2,6 +2,8 @@ package com.sspu.service;
 
 import com.sspu.entity.DriverInfo;
 
+import java.util.List;
+
 public interface DriverInfoService {
 
 
@@ -16,6 +18,8 @@ public interface DriverInfoService {
     int updateByPrimaryKeySelective(DriverInfo record);
 
     int updateByPrimaryKey(DriverInfo record);
+
+    List<DriverInfo> findAllDriverInfo();
 
 }
 

@@ -3,6 +3,8 @@ package com.sspu.mapper;
 import com.sspu.entity.DriverInfo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface DriverInfoMapper {
     int deleteByPrimaryKey(Integer driverinfoid);
@@ -16,4 +18,6 @@ public interface DriverInfoMapper {
     int updateByPrimaryKeySelective(DriverInfo record);
 
     int updateByPrimaryKey(DriverInfo record);
+
+    List<DriverInfo> findAllDriverInfo();
 }

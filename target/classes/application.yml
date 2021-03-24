@@ -15,7 +15,7 @@ mybatis:
   type-aliases-package: com.sspu.entity
   #开启驼峰命名
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: false
 
 wx:
   appid: dfd

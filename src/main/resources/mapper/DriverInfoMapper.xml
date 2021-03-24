@@ -17,12 +17,12 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    driverInfoId, driverName, driverPhone, driverIdNumber, driverCarType, driverCarNumber, 
+    driverInfoId, driverName, driverPhone, driverIdNumber, driverCarType, driverCarNumber,
     driverInfoStatus, driverInfoSource, driverCard, applydate
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from driverInfo
     where driverInfoId = #{driverinfoid,jdbcType=INTEGER}
@@ -34,12 +34,12 @@
   </delete>
   <insert id="insert" keyColumn="driverInfoId" keyProperty="driverinfoid" parameterType="com.sspu.entity.DriverInfo" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into driverInfo (driverName, driverPhone, driverIdNumber, 
-      driverCarType, driverCarNumber, driverInfoStatus, 
+    insert into driverInfo (driverName, driverPhone, driverIdNumber,
+      driverCarType, driverCarNumber, driverInfoStatus,
       driverInfoSource, driverCard, applydate
       )
-    values (#{drivername,jdbcType=VARCHAR}, #{driverphone,jdbcType=DOUBLE}, #{driveridnumber,jdbcType=VARCHAR}, 
-      #{drivercartype,jdbcType=VARCHAR}, #{drivercarnumber,jdbcType=VARCHAR}, #{driverinfostatus,jdbcType=VARCHAR}, 
+    values (#{drivername,jdbcType=VARCHAR}, #{driverphone,jdbcType=DOUBLE}, #{driveridnumber,jdbcType=VARCHAR},
+      #{drivercartype,jdbcType=VARCHAR}, #{drivercarnumber,jdbcType=VARCHAR}, #{driverinfostatus,jdbcType=VARCHAR},
       #{driverinfosource,jdbcType=VARCHAR}, #{drivercard,jdbcType=VARCHAR}, #{applydate,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -153,4 +153,7 @@
       applydate = #{applydate,jdbcType=TIMESTAMP}
     where driverInfoId = #{driverinfoid,jdbcType=INTEGER}
   </update>
+  <select id="findAllDriverInfo" resultMap="BaseResultMap">
+    select * from driverInfo
+  </select>
 </mapper>

@@ -6,11 +6,18 @@ import com.sspu.mapper.DriverInfoMapper;
 import com.sspu.entity.DriverInfo;
 import com.sspu.service.DriverInfoService;
 
+import java.util.List;
+
 @Service
 public class DriverInfoServiceImpl implements DriverInfoService {
 
     @Resource
     private DriverInfoMapper driverInfoMapper;
+
+    @Override
+    public List<DriverInfo> findAllDriverInfo(){
+        return driverInfoMapper.findAllDriverInfo();
+    }
 
     @Override
     public int deleteByPrimaryKey(Integer driverInfoId) {
