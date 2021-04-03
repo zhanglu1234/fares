@@ -2,6 +2,7 @@ package com.sspu.controller;
 
 import com.sspu.entity.ClientInfo;
 import com.sspu.service.ClientInfoService;
+import com.sspu.utils.Temps;
 import com.sspu.vo.ResultVo;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,27 +18,25 @@ public class ClientLoginController {
     @Autowired
     ClientInfoService clientInfoService;
 
-    @GetMapping("/client2")
-    ResultVo clientLogin(@RequestParam String clientUniqueId, String clientPassword) {
-        ResultVo resultVo = new ResultVo();
-        List<ClientInfo> allClientInfo = clientInfoService.findAllClientInfo();
-        for (int i = 0; i < allClientInfo.size(); i++) {
-            if ((allClientInfo.get(i).getClientuniqueid().equals(clientUniqueId)) && (allClientInfo.get(i).getClientpassword().equals(clientPassword))) {
-                return resultVo.SuccessLogin();
-            }
-        }
-        return resultVo.Fail(402, "用户名和密码不一致");
-    }
+    @Autowired
+    Temps temps;
 
     @PostMapping("/client")
-    ResultVo clientLogin(@RequestBody ClientInfo clientInfo) {
+    ResultVo clientLogin(@RequestBody ClientInfo clientInfo){
         ResultVo resultVo = new ResultVo();
-        List<ClientInfo> allClientInfo = clientInfoService.findAllClientInfo();
-        for (int i = 0; i < allClientInfo.size(); i++) {
-            if ((allClientInfo.get(i).getClientuniqueid().equals(clientInfo.getClientuniqueid())) && (allClientInfo.get(i).getClientpassword().equals(clientInfo.getClientpassword()))) {
-                return resultVo.SuccessLogin();
+        String encodedPassword = temps.getDigest(Temps.encode(clientInfo.getClientpassword()));
+        try{
+            int i = clientInfoService.selectByUniqueIdAndPassword(clientInfo.getClientuniqueid(), encodedPassword);
+            if(i!=0){
+               return resultVo.SUCCESS(i);
+            }else {
+                resultVo.Fail(400,"没有该用户信息");
             }
+        }catch(Exception e){
+            return resultVo.Fail(402, "用户名和密码不一致");
         }
-        return resultVo.Fail(402, "用户名和密码不一致");
+        return resultVo;
     }
+
+
 }

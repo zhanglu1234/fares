@@ -53,5 +53,10 @@ public class ClientInfoServiceImpl implements ClientInfoService {
     }
 
 
+    @Override
+    public int selectByUniqueIdAndPassword(String clientuniqueid,String clientpassword){
+        return clientInfoMapper.selectByUniqueIdAndPassword(clientuniqueid,clientpassword);
+    }
+
 }
 

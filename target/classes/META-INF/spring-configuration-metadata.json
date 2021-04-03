@@ -1,12 +1,22 @@
 {
   "groups": [
     {
+      "name": "path",
+      "type": "com.sspu.config.Config",
+      "sourceType": "com.sspu.config.Config"
+    },
+    {
       "name": "wx",
       "type": "com.sspu.wx.config.WxConfig",
       "sourceType": "com.sspu.wx.config.WxConfig"
     }
   ],
   "properties": [
+    {
+      "name": "path.file-path",
+      "type": "java.lang.String",
+      "sourceType": "com.sspu.config.Config"
+    },
     {
       "name": "wx.appid",
       "type": "java.lang.String",

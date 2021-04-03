@@ -17,7 +17,7 @@
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from clientInfo
     where clientId = #{clientid,jdbcType=INTEGER}
@@ -29,9 +29,9 @@
   </delete>
   <insert id="insert" keyColumn="clientId" keyProperty="clientid" parameterType="com.sspu.entity.ClientInfo" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into clientInfo (clientUniqueId, clientPassword, `dateTime`, 
+    insert into clientInfo (clientUniqueId, clientPassword, `dateTime`,
       clientName, clientPhone)
-    values (#{clientuniqueid,jdbcType=VARCHAR}, #{clientpassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, 
+    values (#{clientuniqueid,jdbcType=VARCHAR}, #{clientpassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP},
       #{clientname,jdbcType=VARCHAR}, #{clientphone,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="clientId" keyProperty="clientid" parameterType="com.sspu.entity.ClientInfo" useGeneratedKeys="true">
@@ -108,4 +108,9 @@
     <select id="findAllClientInfo" resultMap="BaseResultMap">
       select * from clientInfo
     </select>
+  <select id="selectByUniqueIdAndPassword" resultType="int" parameterType="com.sspu.entity.ClientInfo">
+    select *
+    from clientInfo
+    where clientUniqueId = #{clientuniqueid,jdbcType=VARCHAR} and clientPassword =#{clientpassword,jdbcType=VARCHAR}
+  </select>
 </mapper>
