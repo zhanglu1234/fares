@@ -42,7 +42,7 @@ public class OrderInfo {
     /**
      * 出入园区时间
      */
-    private Date eventtime;
+    private Date datetime;
 
     /**
      * 客户id

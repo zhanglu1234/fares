@@ -20,5 +20,4 @@ public interface ClientInfoMapper {
     int updateByPrimaryKey(ClientInfo record);
 
     List<ClientInfo> findAllClientInfo();
-
 }

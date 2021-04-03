@@ -21,6 +21,6 @@ CREATE TABLE order_info(
 	orderNumber VARCHAR (50) NOT NULL COMMENT '订单号',
 	paymentTime DATETIME NOT NULL COMMENT '缴费时间',
 	eventType VARCHAR (50) NOT NULL COMMENT '出入园区状态',
-	eventTime DATETIME NOT NULL COMMENT '出入园区时间',
+	dateTime DATETIME NOT NULL COMMENT '出入园区时间',
 	PRIMARY KEY (orderNumber)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'order_info';

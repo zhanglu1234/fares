@@ -21,9 +21,9 @@ public class DriverInfo {
 
     private String driverinfosource;
 
-    private String drivercard;
-
-    private Date applydate;
+    private Date datetime;
 
     private String driverapplytype;
+
+    private Date applytime;
 }

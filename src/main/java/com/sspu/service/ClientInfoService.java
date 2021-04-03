@@ -4,7 +4,7 @@ import com.sspu.entity.ClientInfo;
 
 import java.util.List;
 
-public interface ClientInfoService{
+public interface ClientInfoService {
 
 
     int deleteByPrimaryKey(Integer clientid);
@@ -21,3 +21,4 @@ public interface ClientInfoService{
 
     List<ClientInfo> findAllClientInfo();
 }
+

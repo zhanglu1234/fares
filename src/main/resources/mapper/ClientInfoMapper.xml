@@ -7,17 +7,17 @@
     <id column="clientId" jdbcType="INTEGER" property="clientid" />
     <result column="clientUniqueId" jdbcType="VARCHAR" property="clientuniqueid" />
     <result column="clientPassword" jdbcType="VARCHAR" property="clientpassword" />
-    <result column="datetime" jdbcType="TIMESTAMP" property="datetime" />
+    <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
     <result column="clientName" jdbcType="VARCHAR" property="clientname" />
     <result column="clientPhone" jdbcType="INTEGER" property="clientphone" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    clientId, clientUniqueId, clientPassword, `datetime`, clientName, clientPhone
+    clientId, clientUniqueId, clientPassword, `dateTime`, clientName, clientPhone
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select
+    select 
     <include refid="Base_Column_List" />
     from clientInfo
     where clientId = #{clientid,jdbcType=INTEGER}
@@ -29,9 +29,9 @@
   </delete>
   <insert id="insert" keyColumn="clientId" keyProperty="clientid" parameterType="com.sspu.entity.ClientInfo" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into clientInfo (clientUniqueId, clientPassword, `datetime`,
+    insert into clientInfo (clientUniqueId, clientPassword, `dateTime`, 
       clientName, clientPhone)
-    values (#{clientuniqueid,jdbcType=VARCHAR}, #{clientpassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP},
+    values (#{clientuniqueid,jdbcType=VARCHAR}, #{clientpassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, 
       #{clientname,jdbcType=VARCHAR}, #{clientphone,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="clientId" keyProperty="clientid" parameterType="com.sspu.entity.ClientInfo" useGeneratedKeys="true">
@@ -45,7 +45,7 @@
         clientPassword,
       </if>
       <if test="datetime != null">
-        `datetime`,
+        `dateTime`,
       </if>
       <if test="clientname != null">
         clientName,
@@ -83,7 +83,7 @@
         clientPassword = #{clientpassword,jdbcType=VARCHAR},
       </if>
       <if test="datetime != null">
-        `datetime` = #{datetime,jdbcType=TIMESTAMP},
+        `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       </if>
       <if test="clientname != null">
         clientName = #{clientname,jdbcType=VARCHAR},
@@ -99,7 +99,7 @@
     update clientInfo
     set clientUniqueId = #{clientuniqueid,jdbcType=VARCHAR},
       clientPassword = #{clientpassword,jdbcType=VARCHAR},
-      `datetime` = #{datetime,jdbcType=TIMESTAMP},
+      `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       clientName = #{clientname,jdbcType=VARCHAR},
       clientPhone = #{clientphone,jdbcType=INTEGER}
     where clientId = #{clientid,jdbcType=INTEGER}

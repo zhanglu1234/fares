@@ -22,6 +22,4 @@ public interface DriverInfoMapper {
     List<DriverInfo> findAllDriverInfo();
 
     List<DriverInfo> selectAllByDriverName(String drivername);
-
-
 }

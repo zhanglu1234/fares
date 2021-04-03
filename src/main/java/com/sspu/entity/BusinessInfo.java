@@ -1,5 +1,6 @@
 package com.sspu.entity;
 
+import java.util.Date;
 import lombok.Data;
 
 /**
@@ -16,4 +17,6 @@ public class BusinessInfo {
      * businessPassword
      */
     private String businesspassword;
+
+    private Date datetime;
 }

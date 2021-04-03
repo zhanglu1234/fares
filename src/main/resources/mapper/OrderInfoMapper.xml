@@ -10,13 +10,13 @@
     <result column="paymentStatus" jdbcType="VARCHAR" property="paymentstatus" />
     <result column="paymentTime" jdbcType="TIMESTAMP" property="paymenttime" />
     <result column="eventType" jdbcType="VARCHAR" property="eventtype" />
-    <result column="eventTime" jdbcType="TIMESTAMP" property="eventtime" />
+    <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
     <result column="orderClientId" jdbcType="INTEGER" property="orderclientid" />
     <result column="orderDriverInfoId" jdbcType="INTEGER" property="orderdriverinfoid" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    orderNumber, orderStatus, payment, paymentStatus, paymentTime, eventType, eventTime, 
+    orderNumber, orderStatus, payment, paymentStatus, paymentTime, eventType, `dateTime`, 
     orderClientId, orderDriverInfoId
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -35,11 +35,11 @@
     <!--@mbg.generated-->
     insert into orderInfo (orderNumber, orderStatus, payment, 
       paymentStatus, paymentTime, eventType, 
-      eventTime, orderClientId, orderDriverInfoId
+      `dateTime`, orderClientId, orderDriverInfoId
       )
     values (#{ordernumber,jdbcType=VARCHAR}, #{orderstatus,jdbcType=VARCHAR}, #{payment,jdbcType=DECIMAL}, 
       #{paymentstatus,jdbcType=VARCHAR}, #{paymenttime,jdbcType=TIMESTAMP}, #{eventtype,jdbcType=VARCHAR}, 
-      #{eventtime,jdbcType=TIMESTAMP}, #{orderclientid,jdbcType=INTEGER}, #{orderdriverinfoid,jdbcType=INTEGER}
+      #{datetime,jdbcType=TIMESTAMP}, #{orderclientid,jdbcType=INTEGER}, #{orderdriverinfoid,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.sspu.entity.OrderInfo">
@@ -64,8 +64,8 @@
       <if test="eventtype != null">
         eventType,
       </if>
-      <if test="eventtime != null">
-        eventTime,
+      <if test="datetime != null">
+        `dateTime`,
       </if>
       <if test="orderclientid != null">
         orderClientId,
@@ -93,8 +93,8 @@
       <if test="eventtype != null">
         #{eventtype,jdbcType=VARCHAR},
       </if>
-      <if test="eventtime != null">
-        #{eventtime,jdbcType=TIMESTAMP},
+      <if test="datetime != null">
+        #{datetime,jdbcType=TIMESTAMP},
       </if>
       <if test="orderclientid != null">
         #{orderclientid,jdbcType=INTEGER},
@@ -123,8 +123,8 @@
       <if test="eventtype != null">
         eventType = #{eventtype,jdbcType=VARCHAR},
       </if>
-      <if test="eventtime != null">
-        eventTime = #{eventtime,jdbcType=TIMESTAMP},
+      <if test="datetime != null">
+        `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       </if>
       <if test="orderclientid != null">
         orderClientId = #{orderclientid,jdbcType=INTEGER},
@@ -143,7 +143,7 @@
       paymentStatus = #{paymentstatus,jdbcType=VARCHAR},
       paymentTime = #{paymenttime,jdbcType=TIMESTAMP},
       eventType = #{eventtype,jdbcType=VARCHAR},
-      eventTime = #{eventtime,jdbcType=TIMESTAMP},
+      `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       orderClientId = #{orderclientid,jdbcType=INTEGER},
       orderDriverInfoId = #{orderdriverinfoid,jdbcType=INTEGER}
     where orderNumber = #{ordernumber,jdbcType=VARCHAR}
