@@ -1,6 +1,6 @@
 package com.sspu;
 
-import com.mysql.cj.x.protobuf.Mysqlx;
+import com.sspu.config.Config;
 import com.sspu.entity.ClientInfo;
 import com.sspu.entity.DriverInfo;
 import com.sspu.mapper.ClientInfoMapper;
@@ -8,14 +8,12 @@ import com.sspu.mapper.DriverInfoMapper;
 import com.sspu.wx.config.WxConfig;
 import com.sspu.wx.entity.TokenEntity;
 import com.sspu.wx.utils.TokenUtils;
-import jdk.nashorn.internal.parser.Token;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.UUID;
 
 @SpringBootTest
 class FaresApplicationTests {
@@ -23,6 +21,9 @@ class FaresApplicationTests {
 
     @Autowired
     DriverInfoMapper driverInfo;
+
+    @Autowired
+    Config config;
 
     @Autowired
     DriverInfoMapper driverInfoMapper;
@@ -36,7 +37,11 @@ class FaresApplicationTests {
             System.out.println(clientInfoMapper.findAllClientInfo().get(i).getClientuniqueid());
         }
     }
+    @Test
+    void contextLoads6() throws Exception{
 
+       config.getFilePath();
+    }
 
     @Resource
     WxConfig wxConfig;

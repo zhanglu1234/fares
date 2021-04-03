@@ -1,12 +1,12 @@
-package com.sspu.mapper;
+package com.sspu.service;
 
 import com.sspu.entity.ClientInfo;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
-public interface ClientInfoMapper {
+public interface ClientInfoService{
+
+
     int deleteByPrimaryKey(Integer clientid);
 
     int insert(ClientInfo record);
@@ -20,5 +20,4 @@ public interface ClientInfoMapper {
     int updateByPrimaryKey(ClientInfo record);
 
     List<ClientInfo> findAllClientInfo();
-
 }

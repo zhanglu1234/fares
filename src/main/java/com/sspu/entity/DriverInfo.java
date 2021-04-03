@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class DriverInfo {
-
     private Integer driverinfoid;
 
     private String drivername;
@@ -18,11 +17,13 @@ public class DriverInfo {
 
     private String drivercarnumber;
 
-    private String driverinfostatus;
+    private String driverpictureurl;
 
     private String driverinfosource;
 
     private String drivercard;
 
     private Date applydate;
+
+    private String driverapplytype;
 }

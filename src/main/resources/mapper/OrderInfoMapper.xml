@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sspu.mapper.OrderInfoMapper">
+  <resultMap id="BaseResultMap" type="com.sspu.entity.OrderInfo">
+    <!--@mbg.generated-->
+    <!--@Table orderInfo-->
+    <id column="orderNumber" jdbcType="VARCHAR" property="ordernumber" />
+    <result column="orderStatus" jdbcType="VARCHAR" property="orderstatus" />
+    <result column="payment" jdbcType="DECIMAL" property="payment" />
+    <result column="paymentStatus" jdbcType="VARCHAR" property="paymentstatus" />
+    <result column="paymentTime" jdbcType="TIMESTAMP" property="paymenttime" />
+    <result column="eventType" jdbcType="VARCHAR" property="eventtype" />
+    <result column="eventTime" jdbcType="TIMESTAMP" property="eventtime" />
+    <result column="orderClientId" jdbcType="INTEGER" property="orderclientid" />
+    <result column="orderDriverInfoId" jdbcType="INTEGER" property="orderdriverinfoid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    orderNumber, orderStatus, payment, paymentStatus, paymentTime, eventType, eventTime, 
+    orderClientId, orderDriverInfoId
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from orderInfo
+    where orderNumber = #{ordernumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from orderInfo
+    where orderNumber = #{ordernumber,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sspu.entity.OrderInfo">
+    <!--@mbg.generated-->
+    insert into orderInfo (orderNumber, orderStatus, payment, 
+      paymentStatus, paymentTime, eventType, 
+      eventTime, orderClientId, orderDriverInfoId
+      )
+    values (#{ordernumber,jdbcType=VARCHAR}, #{orderstatus,jdbcType=VARCHAR}, #{payment,jdbcType=DECIMAL}, 
+      #{paymentstatus,jdbcType=VARCHAR}, #{paymenttime,jdbcType=TIMESTAMP}, #{eventtype,jdbcType=VARCHAR}, 
+      #{eventtime,jdbcType=TIMESTAMP}, #{orderclientid,jdbcType=INTEGER}, #{orderdriverinfoid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sspu.entity.OrderInfo">
+    <!--@mbg.generated-->
+    insert into orderInfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ordernumber != null">
+        orderNumber,
+      </if>
+      <if test="orderstatus != null">
+        orderStatus,
+      </if>
+      <if test="payment != null">
+        payment,
+      </if>
+      <if test="paymentstatus != null">
+        paymentStatus,
+      </if>
+      <if test="paymenttime != null">
+        paymentTime,
+      </if>
+      <if test="eventtype != null">
+        eventType,
+      </if>
+      <if test="eventtime != null">
+        eventTime,
+      </if>
+      <if test="orderclientid != null">
+        orderClientId,
+      </if>
+      <if test="orderdriverinfoid != null">
+        orderDriverInfoId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ordernumber != null">
+        #{ordernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstatus != null">
+        #{orderstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null">
+        #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentstatus != null">
+        #{paymentstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="paymenttime != null">
+        #{paymenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventtype != null">
+        #{eventtype,jdbcType=VARCHAR},
+      </if>
+      <if test="eventtime != null">
+        #{eventtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderclientid != null">
+        #{orderclientid,jdbcType=INTEGER},
+      </if>
+      <if test="orderdriverinfoid != null">
+        #{orderdriverinfoid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sspu.entity.OrderInfo">
+    <!--@mbg.generated-->
+    update orderInfo
+    <set>
+      <if test="orderstatus != null">
+        orderStatus = #{orderstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null">
+        payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentstatus != null">
+        paymentStatus = #{paymentstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="paymenttime != null">
+        paymentTime = #{paymenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventtype != null">
+        eventType = #{eventtype,jdbcType=VARCHAR},
+      </if>
+      <if test="eventtime != null">
+        eventTime = #{eventtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderclientid != null">
+        orderClientId = #{orderclientid,jdbcType=INTEGER},
+      </if>
+      <if test="orderdriverinfoid != null">
+        orderDriverInfoId = #{orderdriverinfoid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where orderNumber = #{ordernumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sspu.entity.OrderInfo">
+    <!--@mbg.generated-->
+    update orderInfo
+    set orderStatus = #{orderstatus,jdbcType=VARCHAR},
+      payment = #{payment,jdbcType=DECIMAL},
+      paymentStatus = #{paymentstatus,jdbcType=VARCHAR},
+      paymentTime = #{paymenttime,jdbcType=TIMESTAMP},
+      eventType = #{eventtype,jdbcType=VARCHAR},
+      eventTime = #{eventtime,jdbcType=TIMESTAMP},
+      orderClientId = #{orderclientid,jdbcType=INTEGER},
+      orderDriverInfoId = #{orderdriverinfoid,jdbcType=INTEGER}
+    where orderNumber = #{ordernumber,jdbcType=VARCHAR}
+  </update>
+<!--  *************************************************************************************-->
+</mapper>

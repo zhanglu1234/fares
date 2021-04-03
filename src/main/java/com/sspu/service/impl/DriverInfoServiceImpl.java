@@ -1,7 +1,9 @@
 package com.sspu.service.impl;
 
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
+
 import com.sspu.mapper.DriverInfoMapper;
 import com.sspu.entity.DriverInfo;
 import com.sspu.service.DriverInfoService;
@@ -11,11 +13,12 @@ import java.util.List;
 @Service
 public class DriverInfoServiceImpl implements DriverInfoService {
 
+
     @Resource
     private DriverInfoMapper driverInfoMapper;
 
     @Override
-    public List<DriverInfo> findAllDriverInfo(){
+    public List<DriverInfo> findAllDriverInfo() {
         return driverInfoMapper.findAllDriverInfo();
     }
 
@@ -49,6 +52,13 @@ public class DriverInfoServiceImpl implements DriverInfoService {
         return driverInfoMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public List<DriverInfo> selectAllByDriverName(String drivername) {
+        return driverInfoMapper.selectAllByDriverName(drivername);
+    }
 }
+
+
+
 
 

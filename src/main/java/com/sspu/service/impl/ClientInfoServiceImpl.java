@@ -1,9 +1,12 @@
 package com.sspu.service.impl;
 
-import com.sspu.entity.ClientInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
+
 import com.sspu.mapper.ClientInfoMapper;
+import com.sspu.entity.ClientInfo;
 import com.sspu.service.ClientInfoService;
 
 import java.util.List;
@@ -45,8 +48,9 @@ public class ClientInfoServiceImpl implements ClientInfoService {
     }
 
     @Override
-    public List<ClientInfo> findAllClientInfo(){
+    public List<ClientInfo> findAllClientInfo() {
         return clientInfoMapper.findAllClientInfo();
     }
-}
 
+
+}

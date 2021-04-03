@@ -20,4 +20,8 @@ public interface DriverInfoMapper {
     int updateByPrimaryKey(DriverInfo record);
 
     List<DriverInfo> findAllDriverInfo();
+
+    List<DriverInfo> selectAllByDriverName(String drivername);
+
+
 }
