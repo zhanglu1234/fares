@@ -1,6 +1,7 @@
 package com.sspu.service;
 
 import com.sspu.entity.ClientInfo;
+import sun.awt.SunHints;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface ClientInfoService {
 
     int insertSelective(ClientInfo record);
 
-    ClientInfo selectByPrimaryKey(Integer clientid);
+//    int selectByPrimaryKey(String clientuniqueid);
 
     int updateByPrimaryKeySelective(ClientInfo record);
 

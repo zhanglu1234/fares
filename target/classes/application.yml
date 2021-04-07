@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 9999
 spring:
   #数据库连接配置
   datasource:
@@ -23,3 +23,8 @@ wx:
 
 path:
  filePath: /Users/zhanglu/Pictures/
+
+jwt:
+ config:
+  key: userLogin
+  failure: 3600000

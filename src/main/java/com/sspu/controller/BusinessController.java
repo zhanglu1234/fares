@@ -3,15 +3,13 @@ package com.sspu.controller;
 import com.sspu.vo.ResultVo;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sun.rmi.runtime.Log;
 
 import javax.sound.sampled.Line;
 import java.util.logging.Logger;
 
+@CrossOrigin
 @RequestMapping("/businessLogin")
 @RestController
 @Slf4j

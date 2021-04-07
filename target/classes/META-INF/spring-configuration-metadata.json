@@ -1,6 +1,11 @@
 {
   "groups": [
     {
+      "name": "jwt.config",
+      "type": "com.sspu.utils.JwtUtils",
+      "sourceType": "com.sspu.utils.JwtUtils"
+    },
+    {
       "name": "path",
       "type": "com.sspu.config.Config",
       "sourceType": "com.sspu.config.Config"
@@ -12,6 +17,16 @@
     }
   ],
   "properties": [
+    {
+      "name": "jwt.config.failure",
+      "type": "java.lang.Long",
+      "sourceType": "com.sspu.utils.JwtUtils"
+    },
+    {
+      "name": "jwt.config.key",
+      "type": "java.lang.String",
+      "sourceType": "com.sspu.utils.JwtUtils"
+    },
     {
       "name": "path.file-path",
       "type": "java.lang.String",

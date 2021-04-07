@@ -1,5 +1,6 @@
 package com.sspu.vo;
 
+import com.sspu.wx.utils.TokenUtils;
 import lombok.Data;
 
 import java.util.List;
@@ -10,6 +11,7 @@ public class ResultVo<T> {
     private int code;
     private String msg;
     private T date;
+    private String token;
 
 
 
@@ -26,6 +28,15 @@ public class ResultVo<T> {
 
         this.code = 200;
         this.msg = "登录成功";
+        return this;
+    }
+
+    public ResultVo SuccessToken(T date,String token) {
+
+        this.date = date;
+        this.token = token;
+        this.code = 200;
+        this.msg = "成功获取token";
         return this;
     }
 

@@ -32,10 +32,10 @@ public class ClientInfoServiceImpl implements ClientInfoService {
         return clientInfoMapper.insertSelective(record);
     }
 
-    @Override
-    public ClientInfo selectByPrimaryKey(Integer clientid) {
-        return clientInfoMapper.selectByPrimaryKey(clientid);
-    }
+//    @Override
+//    public ClientInfo selectByPrimaryKey(Integer clientid) {
+//        return clientInfoMapper.selectByPrimaryKey(clientid);
+//    }
 
     @Override
     public int updateByPrimaryKeySelective(ClientInfo record) {
