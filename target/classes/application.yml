@@ -28,3 +28,4 @@ jwt:
  config:
   key: userLogin
   failure: 3600000
+  token-start-with: Bearer

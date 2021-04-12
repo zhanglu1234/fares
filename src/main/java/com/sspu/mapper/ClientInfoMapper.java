@@ -22,4 +22,6 @@ public interface ClientInfoMapper {
     List<ClientInfo> findAllClientInfo();
 
     int selectByUniqueIdAndPassword(String clientuniqueid,String clientpassword);
+
+   int selectByClientUniqueId(String clientuniqueid);
 }

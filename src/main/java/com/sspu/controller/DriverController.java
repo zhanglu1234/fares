@@ -54,7 +54,7 @@ public class DriverController {
     @PostMapping("/insertInfo")
     ResultVo insertDriverInfo(@RequestBody DriverInfo driverInfo) {
 
-        System.out.println(driverInfo.getApplytime());
+        log.info("insertInfo controller");
 
         ResultVo resultVo = new ResultVo();
         try {

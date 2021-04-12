@@ -1,7 +1,7 @@
 package com.sspu.config;
 
 import com.sspu.interceptor.LoginInterceptor;
-//import com.sspu.interceptor.ResourceInterceptor;
+import com.sspu.interceptor.ResourceInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,14 +24,14 @@ public class LoginConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(loginInterceptor).addPathPatterns("/**");
-
-        WebMvcConfigurer.super.addInterceptors(registry);
+        InterceptorRegistration registration = registry.addInterceptor(loginInterceptor);
+        registration.addPathPatterns("/**")
+                .excludePathPatterns("/clientLogin/client1")
+        .excludePathPatterns("/error/400");
+      //  WebMvcConfigurer.super.addInterceptors(registry);
 
 
     }
-
-
 
 
 }

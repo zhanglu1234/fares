@@ -17,17 +17,17 @@ public class ClientController {
     @Autowired
     ClientInfoService clientInfoService;
 
-//    @GetMapping("/selectByClientId")
-//    ResultVo selectByClientId(@RequestParam Integer clientId) {
-//        ResultVo resultVo = new ResultVo();
-//        try {
-//            ClientInfo clientInfo = clientInfoService.selectByPrimaryKey(clientId);
-//            resultVo.SUCCESS(clientInfo);
-//        } catch (Exception e) {
-//            resultVo.Fail(400, "没有该客户信息");
-//        }
-//        return resultVo;
-//    }
+    @GetMapping("/selectByClientId")
+    ResultVo selectByClientId(@RequestParam Integer clientId) {
+        ResultVo resultVo = new ResultVo();
+        try {
+            ClientInfo clientInfo = clientInfoService.selectByPrimaryKey(clientId);
+            resultVo.SUCCESS(clientInfo);
+        } catch (Exception e) {
+            resultVo.Fail(400, "没有该客户信息");
+        }
+        return resultVo;
+    }
 
     @GetMapping("/findAllClientInfo")
     ResultVo findAllClientInfo() {
@@ -44,6 +44,7 @@ public class ClientController {
     @PostMapping("/insertClientInfo")
     ResultVo insertClientInfo(@RequestBody ClientInfo clientInfo) {
         ResultVo resultVo = new ResultVo();
+
         try {
             int data = clientInfoService.insertSelective(clientInfo);
             resultVo.SUCCESS(data);

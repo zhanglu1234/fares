@@ -32,10 +32,10 @@ public class ClientInfoServiceImpl implements ClientInfoService {
         return clientInfoMapper.insertSelective(record);
     }
 
-//    @Override
-//    public ClientInfo selectByPrimaryKey(Integer clientid) {
-//        return clientInfoMapper.selectByPrimaryKey(clientid);
-//    }
+    @Override
+    public ClientInfo selectByPrimaryKey(Integer clientid) {
+        return clientInfoMapper.selectByPrimaryKey(clientid);
+    }
 
     @Override
     public int updateByPrimaryKeySelective(ClientInfo record) {
@@ -56,6 +56,11 @@ public class ClientInfoServiceImpl implements ClientInfoService {
     @Override
     public int selectByUniqueIdAndPassword(String clientuniqueid,String clientpassword){
         return clientInfoMapper.selectByUniqueIdAndPassword(clientuniqueid,clientpassword);
+    }
+
+    @Override
+    public int selectByClientUniqueId(String clientUniqueId) {
+        return clientInfoMapper.selectByClientUniqueId(clientUniqueId);
     }
 
 }

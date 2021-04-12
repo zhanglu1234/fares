@@ -56,6 +56,7 @@ public class ClientLoginController {
                 dataMap.put("getClientUniqueId", clientInfo.getClientuniqueid());
                 //生成token并存入数据返回
                 String token = jwtUtils.createJwt(clientInfo.getClientuniqueid(), dataMap);
+
                 return resultVo.SuccessToken(i,token);
             } else {
                 resultVo.Fail(400, "没有该用户信息");

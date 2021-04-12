@@ -33,16 +33,19 @@ public class JwtUtils {
     /**
      * 设置认证token
      *
-     * @param id      用户登录ID
-     * @param map     其他私有数据
+     * @param id  用户登录ID
+     * @param map 其他私有数据
      * @return
      */
+
+
     public String createJwt(String id, Map<String, Object> map) {
 
 
         //1、设置失效时间啊
         long now = System.currentTimeMillis();  //毫秒
         long exp = now + failure;
+
 
         //2、创建JwtBuilder
         JwtBuilder jwtBuilder = Jwts.builder().setId(id)
@@ -54,8 +57,8 @@ public class JwtUtils {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             jwtBuilder.claim(entry.getKey(), entry.getValue());
         }
-        jwtBuilder.setExpiration(new Date(exp));
 
+        jwtBuilder.setExpiration(new Date(exp));
         //4、创建token
         String token = jwtBuilder.compact();
         return token;
