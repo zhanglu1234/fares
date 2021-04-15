@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sspu.mapper.BusinessInfoMapper">
+  <resultMap id="BaseResultMap" type="com.sspu.entity.BusinessInfo">
+    <!--@mbg.generated-->
+    <!--@Table businessInfo-->
+    <id column="businessName" jdbcType="VARCHAR" property="businessname" />
+    <result column="businessPassword" jdbcType="VARCHAR" property="businesspassword" />
+    <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    businessName, businessPassword, `dateTime`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from businessInfo
+    where businessName = #{businessname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from businessInfo
+    where businessName = #{businessname,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sspu.entity.BusinessInfo">
+    <!--@mbg.generated-->
+    insert into businessInfo (businessName, businessPassword, `dateTime`
+      )
+    values (#{businessname,jdbcType=VARCHAR}, #{businesspassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sspu.entity.BusinessInfo">
+    <!--@mbg.generated-->
+    insert into businessInfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="businessname != null">
+        businessName,
+      </if>
+      <if test="businesspassword != null">
+        businessPassword,
+      </if>
+      <if test="datetime != null">
+        `dateTime`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="businessname != null">
+        #{businessname,jdbcType=VARCHAR},
+      </if>
+      <if test="businesspassword != null">
+        #{businesspassword,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null">
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sspu.entity.BusinessInfo">
+    <!--@mbg.generated-->
+    update businessInfo
+    <set>
+      <if test="businesspassword != null">
+        businessPassword = #{businesspassword,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null">
+        `dateTime` = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where businessName = #{businessname,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sspu.entity.BusinessInfo">
+    <!--@mbg.generated-->
+    update businessInfo
+    set businessPassword = #{businesspassword,jdbcType=VARCHAR},
+      `dateTime` = #{datetime,jdbcType=TIMESTAMP}
+    where businessName = #{businessname,jdbcType=VARCHAR}
+  </update>
+</mapper>
