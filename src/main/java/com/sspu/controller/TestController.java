@@ -28,15 +28,15 @@ public class TestController {
     @Autowired
     JwtUtils jwtUtils;
 
-//
-//    @PostMapping("/login")
-//    ResultVo clientLogin(@RequestBody ClientInfo clientInfo) {
-//        ResultVo resultVo = new ResultVo();
-////        String encodedPassword = temps.getDigest(Temps.encode(clientInfo.getClientpassword()));
-//        System.out.println(clientInfoService.selectByClientUniqueId(clientInfo.getClientuniqueid()));
-//        if(clientInfoService.selectByClientUniqueId(clientInfo.getClientuniqueid())==null){
-//
-//        }
-//        return resultVo;
-//    }
+
+    @PostMapping("/login")
+    ResultVo clientLogin(@RequestBody ClientInfo clientInfo) {
+        ResultVo resultVo = new ResultVo();
+//        String encodedPassword = temps.getDigest(Temps.encode(clientInfo.getClientpassword()));
+        System.out.println(clientInfoService.selectByClientUniqueId(clientInfo.getClientuniqueid()));
+        if(clientInfoService.selectByClientUniqueId(clientInfo.getClientuniqueid())==null){
+
+        }
+        return resultVo;
+    }
 }
