@@ -26,4 +26,6 @@ public class DriverInfo {
     private String driverapplytype;
 
     private Date applytime;
+
+    private String driverorderstatus;
 }

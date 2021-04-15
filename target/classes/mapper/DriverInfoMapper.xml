@@ -15,11 +15,12 @@
     <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
     <result column="driverApplyType" jdbcType="VARCHAR" property="driverapplytype" />
     <result column="applyTime" jdbcType="TIMESTAMP" property="applytime" />
+    <result column="driverOrderStatus" jdbcType="VARCHAR" property="driverorderstatus" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     driverInfoId, driverName, driverPhone, driverIdNumber, driverCarType, driverCarNumber,
-    driverPictureUrl, driverInfoSource, `dateTime`, driverApplyType, applyTime
+    driverPictureUrl, driverInfoSource, `dateTime`, driverApplyType, applyTime, driverOrderStatus
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -37,12 +38,12 @@
     <!--@mbg.generated-->
     insert into driverInfo (driverName, driverPhone, driverIdNumber,
       driverCarType, driverCarNumber, driverPictureUrl,
-      driverInfoSource, driverApplyType,
-      applyTime)
+      driverInfoSource, `dateTime`, driverApplyType,
+      applyTime, driverOrderStatus)
     values (#{drivername,jdbcType=VARCHAR}, #{driverphone,jdbcType=DOUBLE}, #{driveridnumber,jdbcType=VARCHAR},
       #{drivercartype,jdbcType=VARCHAR}, #{drivercarnumber,jdbcType=VARCHAR}, #{driverpictureurl,jdbcType=VARCHAR},
-      #{driverinfosource,jdbcType=VARCHAR},  #{driverapplytype,jdbcType=VARCHAR},
-      #{applytime,jdbcType=TIMESTAMP})
+      #{driverinfosource,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, #{driverapplytype,jdbcType=VARCHAR},
+      #{applytime,jdbcType=TIMESTAMP}, #{driverorderstatus,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="driverInfoId" keyProperty="driverinfoid" parameterType="com.sspu.entity.DriverInfo" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -78,6 +79,9 @@
       <if test="applytime != null">
         applyTime,
       </if>
+      <if test="driverorderstatus != null">
+        driverOrderStatus,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="drivername != null">
@@ -109,6 +113,9 @@
       </if>
       <if test="applytime != null">
         #{applytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="driverorderstatus != null">
+        #{driverorderstatus,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -146,6 +153,9 @@
       <if test="applytime != null">
         applyTime = #{applytime,jdbcType=TIMESTAMP},
       </if>
+      <if test="driverorderstatus != null">
+        driverOrderStatus = #{driverorderstatus,jdbcType=VARCHAR},
+      </if>
     </set>
     where driverInfoId = #{driverinfoid,jdbcType=INTEGER}
   </update>
@@ -161,7 +171,8 @@
       driverInfoSource = #{driverinfosource,jdbcType=VARCHAR},
       `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       driverApplyType = #{driverapplytype,jdbcType=VARCHAR},
-      applyTime = #{applytime,jdbcType=TIMESTAMP}
+      applyTime = #{applytime,jdbcType=TIMESTAMP},
+      driverOrderStatus = #{driverorderstatus,jdbcType=VARCHAR}
     where driverInfoId = #{driverinfoid,jdbcType=INTEGER}
   </update>
 <!--  *********************************************************************************-->
@@ -170,8 +181,47 @@
   </select>
 
   <select id="selectAllByDriverName" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select driverName,driverPhone,driverCarNumber,driverInfoSource,driver
+    select driverName,driverPhone,driverCarNumber,driverInfoSource
     from driverInfo
     where driverName = #{drivername,jdbcType=VARCHAR}
+  </select>
+  <select
+  id="selectAllByDriverIdNumber" resultMap="BaseResultMap">
+    select *
+    from driverInfo
+    where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectUntreatedApplyInfo" resultMap="BaseResultMap">
+    select *
+    from driverInfo
+    where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR} and driverOrderStatus=#{driverorderstatus,jdbcType=VARCHAR}
+    </select>
+
+  <select id="selectDriverApplyInfoByDesc" resultMap="BaseResultMap">
+    select *
+    from driverInfo
+    where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
+    order by applyTime desc
+  </select>
+
+  <select id="selectDriverUntreatedApplyInfoByTimeDesc" resultMap="BaseResultMap">
+    select *
+    from driverInfo
+    where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR} and driverOrderStatus=#{driverorderstatus,jdbcType=VARCHAR}
+    order by applyTime desc
+  </select>
+  <select id="selectUntreatedInfoDesc" resultMap="BaseResultMap">
+    select *
+    from driverInfo
+    where
+    <if test="driverIdNumber !=null and driverIdNumber!=''">
+     driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
+  </if>
+    <if test="driverOrderStatus !=null and driverOrderStatus!=''">
+      and
+        driverOrderStatus = #{driverorderstatus,jdbcType=VARCHAR}
+    </if>
+
   </select>
 </mapper>

@@ -54,14 +54,15 @@ public class ClientInfoServiceImpl implements ClientInfoService {
 
 
     @Override
-    public int selectByUniqueIdAndPassword(String clientuniqueid,String clientpassword){
-        return clientInfoMapper.selectByUniqueIdAndPassword(clientuniqueid,clientpassword);
+    public int selectByUniqueIdAndPassword(String clientuniqueid, String clientpassword) {
+        return clientInfoMapper.selectByUniqueIdAndPassword(clientuniqueid, clientpassword);
     }
 
     @Override
-    public int selectByClientUniqueId(String clientUniqueId) {
+    public ClientInfo selectByClientUniqueId(String clientUniqueId) {
         return clientInfoMapper.selectByClientUniqueId(clientUniqueId);
     }
 
 }
+
 

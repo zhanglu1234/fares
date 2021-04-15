@@ -56,7 +56,29 @@ public class DriverInfoServiceImpl implements DriverInfoService {
     public List<DriverInfo> selectAllByDriverName(String drivername) {
         return driverInfoMapper.selectAllByDriverName(drivername);
     }
+
+    @Override
+    public List<DriverInfo> selectAllByDriverIdNumber(String driveridnumber) {
+        return driverInfoMapper.selectAllByDriverIdNumber(driveridnumber);
+    }
+
+    @Override
+    public List<DriverInfo> selectUntreatedApplyInfo(String driveridnumber,String driverorderstatus) {
+        return driverInfoMapper.selectUntreatedApplyInfo(driveridnumber,driverorderstatus);
+    }
+
+    @Override
+    public List<DriverInfo> selectDriverApplyInfoByDesc(String driveridnumber) {
+        return driverInfoMapper.selectDriverApplyInfoByDesc(driveridnumber);
+    }
+
+    @Override
+    public List<DriverInfo> selectDriverUntreatedApplyInfoByTimeDesc(String driveridnumber,String driverorderstatus) {
+        return driverInfoMapper.selectDriverUntreatedApplyInfoByTimeDesc(driveridnumber,driverorderstatus);
+    }
+
 }
+
 
 
 

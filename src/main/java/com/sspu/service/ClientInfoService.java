@@ -22,10 +22,11 @@ public interface ClientInfoService {
 
     List<ClientInfo> findAllClientInfo();
 
-    int selectByUniqueIdAndPassword(String clientuniqueid,String clientpassword);
+    int selectByUniqueIdAndPassword(String clientuniqueid, String clientpassword);
 
-    int selectByClientUniqueId(String clientUniqueId);
+    ClientInfo selectByClientUniqueId(String clientUniqueId);
 
     ClientInfo selectByPrimaryKey(Integer clientId);
 }
+
 

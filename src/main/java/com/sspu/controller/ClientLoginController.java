@@ -28,36 +28,19 @@ public class ClientLoginController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/client")
-    ResultVo clientLogin(@RequestBody ClientInfo clientInfo) {
-        ResultVo resultVo = new ResultVo();
-        String encodedPassword = temps.getDigest(Temps.encode(clientInfo.getClientpassword()));
-        try {
-            int i = clientInfoService.selectByUniqueIdAndPassword(clientInfo.getClientuniqueid(), encodedPassword);
-            if (i != 0) {
-                return resultVo.SUCCESS(i);
-            } else {
-                resultVo.Fail(400, "没有该用户信息");
-            }
-        } catch (Exception e) {
-            return resultVo.Fail(402, "用户名和密码不一致");
-        }
-        return resultVo;
-    }
 
-    @PostMapping("/client1")
+    @PostMapping("/client")
     ResultVo clientLogin1(@RequestBody ClientInfo clientInfo) {
         ResultVo resultVo = new ResultVo();
         String encodedPassword = temps.getDigest(Temps.encode(clientInfo.getClientpassword()));
         try {
             int i = clientInfoService.selectByUniqueIdAndPassword(clientInfo.getClientuniqueid(), encodedPassword);
-            if (i >= 0) {
+            if (i > 0) {
                 Map<String, Object> dataMap = new HashMap<>();
                 dataMap.put("getClientUniqueId", clientInfo.getClientuniqueid());
                 //生成token并存入数据返回
                 String token = jwtUtils.createJwt(clientInfo.getClientuniqueid(), dataMap);
-
-                return resultVo.SuccessToken(i,token);
+                return resultVo.SuccessToken(i, token);
             } else {
                 resultVo.Fail(400, "没有该用户信息");
             }

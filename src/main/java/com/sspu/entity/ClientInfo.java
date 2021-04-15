@@ -16,4 +16,8 @@ public class ClientInfo {
     private String clientname;
 
     private Integer clientphone;
+
+    private Integer clientloginerror;
+
+    private Date clientallowedlogintime;
 }

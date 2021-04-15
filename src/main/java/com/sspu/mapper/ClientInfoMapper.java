@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+
 @Mapper
 public interface ClientInfoMapper {
     int deleteByPrimaryKey(Integer clientid);
@@ -21,7 +22,7 @@ public interface ClientInfoMapper {
 
     List<ClientInfo> findAllClientInfo();
 
-    int selectByUniqueIdAndPassword(String clientuniqueid,String clientpassword);
+    int selectByUniqueIdAndPassword(String clientuniqueid, String clientpassword);
 
-   int selectByClientUniqueId(String clientuniqueid);
+    ClientInfo selectByClientUniqueId(String clientuniqueid);
 }

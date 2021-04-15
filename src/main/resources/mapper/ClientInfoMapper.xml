@@ -10,16 +10,20 @@
     <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
     <result column="clientName" jdbcType="VARCHAR" property="clientname" />
     <result column="clientPhone" jdbcType="INTEGER" property="clientphone" />
+    <result column="clientLoginError" jdbcType="INTEGER" property="clientloginerror" />
+    <result column="clientAllowedLoginTime" jdbcType="TIMESTAMP" property="clientallowedlogintime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    clientId, clientUniqueId, clientPassword, `dateTime`, clientName, clientPhone
+    clientId, clientUniqueId, clientPassword, `dateTime`, clientName, clientPhone, clientLoginError,
+    clientAllowedLoginTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select *
+    select
+    <include refid="Base_Column_List" />
     from clientInfo
-    where clientId = #{clientId,jdbcType=INTEGER}
+    where clientId = #{clientid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
@@ -29,9 +33,11 @@
   <insert id="insert" keyColumn="clientId" keyProperty="clientid" parameterType="com.sspu.entity.ClientInfo" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into clientInfo (clientUniqueId, clientPassword, `dateTime`,
-      clientName, clientPhone)
+      clientName, clientPhone, clientLoginError,
+      clientAllowedLoginTime)
     values (#{clientuniqueid,jdbcType=VARCHAR}, #{clientpassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP},
-      #{clientname,jdbcType=VARCHAR}, #{clientphone,jdbcType=INTEGER})
+      #{clientname,jdbcType=VARCHAR}, #{clientphone,jdbcType=INTEGER}, #{clientloginerror,jdbcType=INTEGER},
+      #{clientallowedlogintime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="clientId" keyProperty="clientid" parameterType="com.sspu.entity.ClientInfo" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -52,6 +58,12 @@
       <if test="clientphone != null">
         clientPhone,
       </if>
+      <if test="clientloginerror != null">
+        clientLoginError,
+      </if>
+      <if test="clientallowedlogintime != null">
+        clientAllowedLoginTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="clientuniqueid != null">
@@ -68,6 +80,12 @@
       </if>
       <if test="clientphone != null">
         #{clientphone,jdbcType=INTEGER},
+      </if>
+      <if test="clientloginerror != null">
+        #{clientloginerror,jdbcType=INTEGER},
+      </if>
+      <if test="clientallowedlogintime != null">
+        #{clientallowedlogintime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -90,6 +108,12 @@
       <if test="clientphone != null">
         clientPhone = #{clientphone,jdbcType=INTEGER},
       </if>
+      <if test="clientloginerror != null">
+        clientLoginError = #{clientloginerror,jdbcType=INTEGER},
+      </if>
+      <if test="clientallowedlogintime != null">
+        clientAllowedLoginTime = #{clientallowedlogintime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where clientId = #{clientid,jdbcType=INTEGER}
   </update>
@@ -100,21 +124,23 @@
       clientPassword = #{clientpassword,jdbcType=VARCHAR},
       `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       clientName = #{clientname,jdbcType=VARCHAR},
-      clientPhone = #{clientphone,jdbcType=INTEGER}
+      clientPhone = #{clientphone,jdbcType=INTEGER},
+      clientLoginError = #{clientloginerror,jdbcType=INTEGER},
+      clientAllowedLoginTime = #{clientallowedlogintime,jdbcType=TIMESTAMP}
     where clientId = #{clientid,jdbcType=INTEGER}
   </update>
 <!--  ****************************************************************************-->
     <select id="findAllClientInfo" resultMap="BaseResultMap">
       select * from clientInfo
     </select>
-  <select id="selectByUniqueIdAndPassword" resultType="int" parameterType="com.sspu.entity.ClientInfo">
+  <select id="selectByUniqueIdAndPassword" parameterType="com.sspu.entity.ClientInfo" resultType="int">
     select count(*)
     from clientInfo
     where clientUniqueId = #{clientuniqueid,jdbcType=VARCHAR} and clientPassword =#{clientpassword,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectByClientUniqueId" resultType="int">
-    select count(*)
+  <select id="selectByClientUniqueId" resultType="com.sspu.entity.ClientInfo">
+    select *
     from clientInfo
     where clientUniqueId = #{clientuniqueid,jdbcType=VARCHAR}
     </select>

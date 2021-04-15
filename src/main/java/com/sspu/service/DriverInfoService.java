@@ -23,7 +23,15 @@ public interface DriverInfoService {
 
     List<DriverInfo> selectAllByDriverName(String drivername);
 
+    List<DriverInfo> selectAllByDriverIdNumber(String driveridnumber);
+
+    List<DriverInfo> selectUntreatedApplyInfo(String driverIdNumber,String driverOrderStatus);
+
+    List<DriverInfo> selectDriverApplyInfoByDesc(String driveridnumber);
+
+    List<DriverInfo> selectDriverUntreatedApplyInfoByTimeDesc(String driveridnumber,String driverorderstatus);
 }
+
 
 
 

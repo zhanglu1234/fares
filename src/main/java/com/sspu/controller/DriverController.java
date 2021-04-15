@@ -58,11 +58,15 @@ public class DriverController {
 
         ResultVo resultVo = new ResultVo();
         try {
-            int insert = driverInfoService.insert(driverInfo);
-            return resultVo.SUCCESS(insert);
+            int insert = driverInfoService.insertSelective(driverInfo);
+            System.out.println(insert);
+            if (insert != 0) {
+
+                return resultVo.SUCCESS(insert);
+            }
 
         } catch (Exception e) {
-            resultVo.Fail(500, "发生错误");
+            return resultVo.Fail(402, "申请失败！");
         }
         return resultVo;
     }
