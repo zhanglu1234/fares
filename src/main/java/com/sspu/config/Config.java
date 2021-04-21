@@ -9,10 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class Config {
 
-   private  String filePath;
+   private String filePath;
 
 
+   private Integer pageNum;
 
+   private Integer pageSize;
+
+   private Integer driverInfoId;
 
 }
 

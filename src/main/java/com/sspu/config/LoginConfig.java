@@ -27,15 +27,12 @@ public class LoginConfig implements WebMvcConfigurer {
         InterceptorRegistration registration = registry.addInterceptor(loginInterceptor);
         registration.addPathPatterns("/**")
                 .excludePathPatterns("/clientLogin/**")
-//                .excludePathPatterns("/applyInfo/**")
+                .excludePathPatterns("/applyInfo/**")
 //             .excludePathPatterns("/driverOrderInfo/**");
-                .excludePathPatterns("/haha/**");
-
-//        .excludePathPatterns("/error/400");
-      //  WebMvcConfigurer.super.addInterceptors(registry);
+                .excludePathPatterns("/test/")
+                .excludePathPatterns("/getPicture/**")
+                .excludePathPatterns("/businessLogin/**");
 
 
     }
-
-
 }

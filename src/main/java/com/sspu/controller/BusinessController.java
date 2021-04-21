@@ -1,5 +1,6 @@
 package com.sspu.controller;
 
+import com.sspu.entity.BusinessInfo;
 import com.sspu.vo.ResultVo;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -17,17 +18,16 @@ public class BusinessController {
 
 
 
-    @GetMapping("/login")
-    ResultVo businessLogin(@RequestParam String businessName, String businessPassword) {
+    @PostMapping("/login")
+    ResultVo businessLogin(@RequestBody BusinessInfo businessInfo) {
 
 
         ResultVo resultVo = new ResultVo();
         try {
-            if ((businessName.equals("admin")) && (businessPassword.equals("123456"))) {
+            if ((businessInfo.getBusinessname().equals("admin")) && (businessInfo.getBusinesspassword().equals("123456"))) {
 
                 return resultVo.SuccessLogin();
             }
-
         } catch (Exception e) {
             return resultVo.Fail(400, "用户名和密码不一致");
         }

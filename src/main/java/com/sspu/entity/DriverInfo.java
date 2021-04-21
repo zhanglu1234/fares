@@ -9,7 +9,7 @@ public class DriverInfo {
 
     private String drivername;
 
-    private Double driverphone;
+    private String driverphone;
 
     private String driveridnumber;
 

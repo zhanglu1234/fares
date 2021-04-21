@@ -6,7 +6,7 @@
     <!--@Table driverInfo-->
     <id column="driverInfoId" jdbcType="INTEGER" property="driverinfoid" />
     <result column="driverName" jdbcType="VARCHAR" property="drivername" />
-    <result column="driverPhone" jdbcType="DOUBLE" property="driverphone" />
+    <result column="driverPhone" jdbcType="VARCHAR" property="driverphone" />
     <result column="driverIdNumber" jdbcType="VARCHAR" property="driveridnumber" />
     <result column="driverCarType" jdbcType="VARCHAR" property="drivercartype" />
     <result column="driverCarNumber" jdbcType="VARCHAR" property="drivercarnumber" />
@@ -40,7 +40,7 @@
       driverCarType, driverCarNumber, driverPictureUrl,
       driverInfoSource, `dateTime`, driverApplyType,
       applyTime, driverOrderStatus)
-    values (#{drivername,jdbcType=VARCHAR}, #{driverphone,jdbcType=DOUBLE}, #{driveridnumber,jdbcType=VARCHAR},
+    values (#{drivername,jdbcType=VARCHAR}, #{driverphone,jdbcType=VARCHAR}, #{driveridnumber,jdbcType=VARCHAR},
       #{drivercartype,jdbcType=VARCHAR}, #{drivercarnumber,jdbcType=VARCHAR}, #{driverpictureurl,jdbcType=VARCHAR},
       #{driverinfosource,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, #{driverapplytype,jdbcType=VARCHAR},
       #{applytime,jdbcType=TIMESTAMP}, #{driverorderstatus,jdbcType=VARCHAR})
@@ -88,7 +88,7 @@
         #{drivername,jdbcType=VARCHAR},
       </if>
       <if test="driverphone != null">
-        #{driverphone,jdbcType=DOUBLE},
+        #{driverphone,jdbcType=VARCHAR},
       </if>
       <if test="driveridnumber != null">
         #{driveridnumber,jdbcType=VARCHAR},
@@ -127,7 +127,7 @@
         driverName = #{drivername,jdbcType=VARCHAR},
       </if>
       <if test="driverphone != null">
-        driverPhone = #{driverphone,jdbcType=DOUBLE},
+        driverPhone = #{driverphone,jdbcType=VARCHAR},
       </if>
       <if test="driveridnumber != null">
         driverIdNumber = #{driveridnumber,jdbcType=VARCHAR},
@@ -163,7 +163,7 @@
     <!--@mbg.generated-->
     update driverInfo
     set driverName = #{drivername,jdbcType=VARCHAR},
-      driverPhone = #{driverphone,jdbcType=DOUBLE},
+      driverPhone = #{driverphone,jdbcType=VARCHAR},
       driverIdNumber = #{driveridnumber,jdbcType=VARCHAR},
       driverCarType = #{drivercartype,jdbcType=VARCHAR},
       driverCarNumber = #{drivercarnumber,jdbcType=VARCHAR},
@@ -175,53 +175,29 @@
       driverOrderStatus = #{driverorderstatus,jdbcType=VARCHAR}
     where driverInfoId = #{driverinfoid,jdbcType=INTEGER}
   </update>
-<!--  *********************************************************************************-->
-  <select id="findAllDriverInfo" resultMap="BaseResultMap">
-    select * from driverInfo
-  </select>
-
-  <select id="selectAllByDriverName" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select driverName,driverPhone,driverCarNumber,driverInfoSource
-    from driverInfo
-    where driverName = #{drivername,jdbcType=VARCHAR}
-  </select>
-  <select
-  id="selectAllByDriverIdNumber" resultMap="BaseResultMap">
+  <select id="selectAllByDriverIdNumber" resultMap="BaseResultMap">
     select *
     from driverInfo
     where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
-  </select>
-
-  <select id="selectUntreatedApplyInfo" resultMap="BaseResultMap">
-    select *
-    from driverInfo
-    where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR} and driverOrderStatus=#{driverorderstatus,jdbcType=VARCHAR}
-    </select>
-
-  <select id="selectDriverApplyInfoByDesc" resultMap="BaseResultMap">
-    select *
-    from driverInfo
-    where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
-    order by applyTime desc
-  </select>
-
-  <select id="selectDriverUntreatedApplyInfoByTimeDesc" resultMap="BaseResultMap">
-    select *
-    from driverInfo
-    where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR} and driverOrderStatus=#{driverorderstatus,jdbcType=VARCHAR}
-    order by applyTime desc
   </select>
   <select id="selectUntreatedInfoDesc" resultMap="BaseResultMap">
     select *
     from driverInfo
-    where
-    <if test="driverIdNumber !=null and driverIdNumber!=''">
-     driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
-  </if>
-    <if test="driverOrderStatus !=null and driverOrderStatus!=''">
-      and
-        driverOrderStatus = #{driverorderstatus,jdbcType=VARCHAR}
+    where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
+    <if test="driverorderstatus == '0'.toString()">
+      and  driverOrderStatus=#{driverorderstatus,jdbcType=VARCHAR}
     </if>
+    <if test="orderBy == 'DESC'">
+      order by applyTime ${orderBy}
+    </if>
+  </select>
 
+  <select id="findAllDriverApplyInfo" resultMap="BaseResultMap">
+    select *
+    from driverInfo
+    where 1=1
+    <if test="driverinfoid !=null ">
+      and  driverinfoid=#{driverinfoid,jdbcType=INTEGER}
+    </if>
   </select>
 </mapper>

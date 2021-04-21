@@ -10,15 +10,15 @@ public class ResultVo<T> {
 
     private int code;
     private String msg;
-    private T date;
+    private T data;
     private String token;
 
 
 
-    public ResultVo SUCCESS(T date) {
+    public ResultVo SUCCESS(T data) {
         this.code = 200;
         this.msg = "OK";
-        this.date = date;
+        this.data = data;
         return this;
     }
 
@@ -31,9 +31,9 @@ public class ResultVo<T> {
         return this;
     }
 
-    public ResultVo SuccessToken(T date,String token) {
+    public ResultVo SuccessToken(T data,String token) {
 
-        this.date = date;
+        this.data = data;
         this.token = token;
         this.code = 200;
         this.msg = "成功获取token";
@@ -44,6 +44,12 @@ public class ResultVo<T> {
     public ResultVo Fail(int code, String msg) {
 
         this.code = code;
+        this.msg = msg;
+        return this;
+    }
+    public ResultVo FailLogin( String msg) {
+
+
         this.msg = msg;
         return this;
     }

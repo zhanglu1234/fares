@@ -17,10 +17,6 @@ public class DriverInfoServiceImpl implements DriverInfoService {
     @Resource
     private DriverInfoMapper driverInfoMapper;
 
-    @Override
-    public List<DriverInfo> findAllDriverInfo() {
-        return driverInfoMapper.findAllDriverInfo();
-    }
 
     @Override
     public int deleteByPrimaryKey(Integer driverInfoId) {
@@ -52,10 +48,6 @@ public class DriverInfoServiceImpl implements DriverInfoService {
         return driverInfoMapper.updateByPrimaryKey(record);
     }
 
-    @Override
-    public List<DriverInfo> selectAllByDriverName(String drivername) {
-        return driverInfoMapper.selectAllByDriverName(drivername);
-    }
 
     @Override
     public List<DriverInfo> selectAllByDriverIdNumber(String driveridnumber) {
@@ -63,18 +55,13 @@ public class DriverInfoServiceImpl implements DriverInfoService {
     }
 
     @Override
-    public List<DriverInfo> selectUntreatedApplyInfo(String driveridnumber,String driverorderstatus) {
-        return driverInfoMapper.selectUntreatedApplyInfo(driveridnumber,driverorderstatus);
+    public List<DriverInfo> listBySelectedContent(String driveridnumber, String driverorderstatus, String orderBy) {
+        return driverInfoMapper.selectUntreatedInfoDesc(driveridnumber, driverorderstatus, orderBy);
     }
 
     @Override
-    public List<DriverInfo> selectDriverApplyInfoByDesc(String driveridnumber) {
-        return driverInfoMapper.selectDriverApplyInfoByDesc(driveridnumber);
-    }
-
-    @Override
-    public List<DriverInfo> selectDriverUntreatedApplyInfoByTimeDesc(String driveridnumber,String driverorderstatus) {
-        return driverInfoMapper.selectDriverUntreatedApplyInfoByTimeDesc(driveridnumber,driverorderstatus);
+    public List<DriverInfo> findAllDriverApplyInfo(Integer driverinfoid) {
+        return driverInfoMapper.findAllDriverApplyInfo(driverinfoid);
     }
 
 }

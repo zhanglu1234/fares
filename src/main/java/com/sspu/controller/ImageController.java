@@ -3,11 +3,11 @@ package com.sspu.controller;
 import com.sspu.config.Config;
 import com.sspu.vo.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
 
-import javax.xml.crypto.Data;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -22,7 +22,8 @@ import java.util.UUID;
 public class ImageController {
 
     @Autowired
-    private static Config config;
+    private  Config config;
+
 
     @PostMapping("/picture")
     public ResultVo pictureUrl(@RequestBody String pictureurl) {
@@ -42,7 +43,10 @@ public class ImageController {
                 }
             }
             //生成png图片
-            String basePath = "/Users/zhanglu/Pictures/";
+//            String basePath = "/Users/zhanglu/Pictures/";
+            String basePath = config.getFilePath();
+//            System.out.println("+++++++++++++++++++++++++++++");
+//            System.out.println(basePath);
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String datePath = formatter.format(date);
