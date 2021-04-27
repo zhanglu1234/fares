@@ -1,10 +1,14 @@
 package com.sspu.service.impl;
 
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
+
 import com.sspu.entity.OrderInfo;
 import com.sspu.mapper.OrderInfoMapper;
 import com.sspu.service.OrderInfoService;
+
+import java.util.List;
 
 @Service
 public class OrderInfoServiceImpl implements OrderInfoService {
@@ -43,7 +47,13 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         return orderInfoMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public List<OrderInfo> findAllOrderList(String ordernumber) {
+        return orderInfoMapper.findAllOrderList(ordernumber);
+    }
+
 
 }
+
 
 

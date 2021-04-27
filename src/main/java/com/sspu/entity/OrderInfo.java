@@ -15,7 +15,7 @@ public class OrderInfo {
     private String ordernumber;
 
     /**
-     * 订单状态:预约订单是否有效
+     * 订单状态:-1订单无效，0申请入园，1审核订单，2同意申请
      */
     private String orderstatus;
 
@@ -40,6 +40,11 @@ public class OrderInfo {
     private String eventtype;
 
     /**
+     * 车牌号
+     */
+    private String ordercarnumber;
+
+    /**
      * 出入园区时间
      */
     private Date datetime;
@@ -53,4 +58,6 @@ public class OrderInfo {
      * 司机id
      */
     private Integer orderdriverinfoid;
+
+
 }

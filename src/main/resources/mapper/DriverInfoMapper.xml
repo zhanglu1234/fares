@@ -175,11 +175,13 @@
       driverOrderStatus = #{driverorderstatus,jdbcType=VARCHAR}
     where driverInfoId = #{driverinfoid,jdbcType=INTEGER}
   </update>
+
   <select id="selectAllByDriverIdNumber" resultMap="BaseResultMap">
     select *
     from driverInfo
     where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
   </select>
+
   <select id="selectUntreatedInfoDesc" resultMap="BaseResultMap">
     select *
     from driverInfo
@@ -199,5 +201,6 @@
     <if test="driverinfoid !=null ">
       and  driverinfoid=#{driverinfoid,jdbcType=INTEGER}
     </if>
+
   </select>
 </mapper>

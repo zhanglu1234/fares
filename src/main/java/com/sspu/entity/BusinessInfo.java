@@ -8,6 +8,8 @@ import lombok.Data;
  */
 @Data
 public class BusinessInfo {
+    private Integer businessid;
+
     /**
      * businessName
      */
@@ -19,4 +21,8 @@ public class BusinessInfo {
     private String businesspassword;
 
     private Date datetime;
+
+    private Integer businessloginerror;
+
+    private Date businessallowedlogintime;
 }

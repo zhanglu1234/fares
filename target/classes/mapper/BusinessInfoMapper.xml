@@ -4,34 +4,39 @@
   <resultMap id="BaseResultMap" type="com.sspu.entity.BusinessInfo">
     <!--@mbg.generated-->
     <!--@Table businessInfo-->
-    <id column="businessName" jdbcType="VARCHAR" property="businessname" />
+    <id column="businessId" jdbcType="INTEGER" property="businessid" />
+    <result column="businessName" jdbcType="VARCHAR" property="businessname" />
     <result column="businessPassword" jdbcType="VARCHAR" property="businesspassword" />
     <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
+    <result column="businessLoginError" jdbcType="INTEGER" property="businessloginerror" />
+    <result column="businessAllowedLoginTime" jdbcType="TIMESTAMP" property="businessallowedlogintime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    businessName, businessPassword, `dateTime`
+    businessId, businessName, businessPassword, `dateTime`, businessLoginError, businessAllowedLoginTime
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from businessInfo
-    where businessName = #{businessname,jdbcType=VARCHAR}
+    where businessId = #{businessid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
     delete from businessInfo
-    where businessName = #{businessname,jdbcType=VARCHAR}
+    where businessId = #{businessid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.sspu.entity.BusinessInfo">
+  <insert id="insert" keyColumn="businessId" keyProperty="businessid" parameterType="com.sspu.entity.BusinessInfo" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into businessInfo (businessName, businessPassword, `dateTime`
+    insert into businessInfo (businessName, businessPassword, `dateTime`,
+      businessLoginError, businessAllowedLoginTime
       )
-    values (#{businessname,jdbcType=VARCHAR}, #{businesspassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}
+    values (#{businessname,jdbcType=VARCHAR}, #{businesspassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP},
+      #{businessloginerror,jdbcType=INTEGER}, #{businessallowedlogintime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.sspu.entity.BusinessInfo">
+  <insert id="insertSelective" keyColumn="businessId" keyProperty="businessid" parameterType="com.sspu.entity.BusinessInfo" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into businessInfo
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -44,6 +49,12 @@
       <if test="datetime != null">
         `dateTime`,
       </if>
+      <if test="businessloginerror != null">
+        businessLoginError,
+      </if>
+      <if test="businessallowedlogintime != null">
+        businessAllowedLoginTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="businessname != null">
@@ -55,26 +66,54 @@
       <if test="datetime != null">
         #{datetime,jdbcType=TIMESTAMP},
       </if>
+      <if test="businessloginerror != null">
+        #{businessloginerror,jdbcType=INTEGER},
+      </if>
+      <if test="businessallowedlogintime != null">
+        #{businessallowedlogintime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.sspu.entity.BusinessInfo">
     <!--@mbg.generated-->
     update businessInfo
     <set>
+      <if test="businessname != null">
+        businessName = #{businessname,jdbcType=VARCHAR},
+      </if>
       <if test="businesspassword != null">
         businessPassword = #{businesspassword,jdbcType=VARCHAR},
       </if>
       <if test="datetime != null">
         `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       </if>
+      <if test="businessloginerror != null">
+        businessLoginError = #{businessloginerror,jdbcType=INTEGER},
+      </if>
+      <if test="businessallowedlogintime != null">
+        businessAllowedLoginTime = #{businessallowedlogintime,jdbcType=TIMESTAMP},
+      </if>
     </set>
-    where businessName = #{businessname,jdbcType=VARCHAR}
+    where businessId = #{businessid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.sspu.entity.BusinessInfo">
     <!--@mbg.generated-->
     update businessInfo
-    set businessPassword = #{businesspassword,jdbcType=VARCHAR},
-      `dateTime` = #{datetime,jdbcType=TIMESTAMP}
-    where businessName = #{businessname,jdbcType=VARCHAR}
+    set businessName = #{businessname,jdbcType=VARCHAR},
+      businessPassword = #{businesspassword,jdbcType=VARCHAR},
+      `dateTime` = #{datetime,jdbcType=TIMESTAMP},
+      businessLoginError = #{businessloginerror,jdbcType=INTEGER},
+      businessAllowedLoginTime = #{businessallowedlogintime,jdbcType=TIMESTAMP}
+    where businessId = #{businessid,jdbcType=INTEGER}
   </update>
+    <select id="selectBusinessAndPassword" resultType="int">
+      select count(*)
+      from businessInfo
+      where businessName = #{businessname,jdbcType=VARCHAR} and businessPassword = #{businesspassword,jdbcType=VARCHAR}
+    </select>
+  <select id="selectBusinessInfoByBusinessName" resultMap="BaseResultMap">
+    select *
+    from businessInfo
+    where businessName = #{businessname,jdbcType=VARCHAR}
+  </select>
 </mapper>

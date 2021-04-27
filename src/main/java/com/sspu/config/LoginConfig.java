@@ -31,6 +31,7 @@ public class LoginConfig implements WebMvcConfigurer {
 //             .excludePathPatterns("/driverOrderInfo/**");
                 .excludePathPatterns("/test/")
                 .excludePathPatterns("/getPicture/**")
+//                .excludePathPatterns("/order/**");
                 .excludePathPatterns("/businessLogin/**");
 
 

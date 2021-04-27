@@ -4,17 +4,25 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sspu.config.Config;
 import com.sspu.entity.DriverInfo;
+import com.sspu.entity.OrderInfo;
 import com.sspu.service.DriverInfoService;
+import com.sspu.service.OrderInfoService;
 import com.sspu.utils.CheckIdNumber;
 import com.sspu.utils.CheckPhoneNumber;
 import com.sspu.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.*;
 import sun.security.provider.MD5;
 
 import javax.xml.validation.Validator;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -28,6 +36,9 @@ public class DriverController {
     DriverInfoService driverInfoService;
 
     @Autowired
+    OrderInfoService orderInfoService;
+
+    @Autowired
     CheckIdNumber checkIdNumber;
 
     @Autowired
@@ -36,27 +47,45 @@ public class DriverController {
 
     /**
      * 司机申请入/出园区
+     * 生成订单
      *
      * @param driverInfo
      * @return
      */
+    @Autowired
+    private DataSourceTransactionManager dataSourceTransactionManager;
 
+    @Transactional
     @PostMapping("/insertInfo")
     ResultVo insertDriverInfo(@RequestBody DriverInfo driverInfo) {
         ResultVo resultVo = new ResultVo();
+        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
+        defaultTransactionDefinition.setName("translation_InsertDriverInfo");
+        defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        TransactionStatus status = dataSourceTransactionManager.getTransaction(defaultTransactionDefinition);
         //验证用户身份证号码
         boolean driverIdNumberResult = checkIdNumber.check(driverInfo.getDriveridnumber());
         //验证手机号码
         boolean phoneLegal = checkPhoneNumber.isPhoneLegal(driverInfo.getDriverphone() + "");
         if (driverIdNumberResult && phoneLegal) {
             try {
-                int insert = driverInfoService.insertSelective(driverInfo);
+                driverInfoService.insertSelective(driverInfo);
+                OrderInfo orderInfo = new OrderInfo();
+                String orderId = UUID.randomUUID().toString().replaceAll("-", "");
+                orderInfo.setOrdernumber(orderId);
+                orderInfo.setOrderstatus(driverInfo.getDriverorderstatus());
+                orderInfo.setOrderdriverinfoid(driverInfo.getDriverinfoid());
+                orderInfo.setEventtype(driverInfo.getDriverapplytype());
+                orderInfo.setOrdercarnumber(driverInfo.getDrivercarnumber());
+                System.out.println(orderInfo);
+                orderInfoService.insertSelective(orderInfo);
+                dataSourceTransactionManager.commit(status);
+                resultVo.SUCCESS("成功");
 
-                if (insert != 0) {
-                    return resultVo.SUCCESS(insert);
-                }
             } catch (Exception e) {
-                return resultVo.Fail(402, "申请失败！");
+                dataSourceTransactionManager.rollback(status);
+                resultVo.Fail(402, "失败");
+//            throw e;
             }
         } else {
             resultVo.Fail(402, "申请失败！");
@@ -74,6 +103,8 @@ public class DriverController {
     ResultVo selectDriverAllInfoByDriverIdNumber(@RequestParam String driverIdNumber) {
 
         ResultVo resultVo = new ResultVo();
+
+
         try {
             List<DriverInfo> list = driverInfoService.selectAllByDriverIdNumber(driverIdNumber);
             System.out.println(list.size());
@@ -135,7 +166,7 @@ public class DriverController {
 //    }
 
     /**
-     * 申请列表分页
+     * 后台系统申请列表+分页
      *
      * @param config
      * @return
@@ -160,22 +191,42 @@ public class DriverController {
     }
 
     /**
-     * 更新司机申请信息
+     * 后台更新司机申请信息
+     *
      * @param driverInfo
      * @return
      */
+    @Transactional
     @PatchMapping("/updateDriverApplyInfo")
     ResultVo updateDriverApplyInfo(@RequestBody DriverInfo driverInfo) {
         ResultVo resultVo = new ResultVo();
-        int result;
+        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
+        defaultTransactionDefinition.setName("translation_InsertDriverInfo");
+        defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        //开启事务
+        TransactionStatus status = dataSourceTransactionManager.getTransaction(defaultTransactionDefinition);
+
         try {
-            result = driverInfoService.updateByPrimaryKeySelective(driverInfo);
-            if (result >0) {
-                return resultVo.SUCCESS(result);
-            } else {
-                resultVo.Fail(402, "更新失败");
+            driverInfoService.updateByPrimaryKeySelective(driverInfo);
+            OrderInfo orderInfo = new OrderInfo();
+            orderInfo.setOrderdriverinfoid(driverInfo.getDriverinfoid());
+            orderInfo.setOrdercarnumber(driverInfo.getDrivercarnumber());
+            if (driverInfo.getDriverorderstatus().equals("1")) {
+                orderInfo.setPaymentstatus("未缴费");
             }
+            if (driverInfo.getDriverorderstatus().equals("2")) {
+                orderInfo.setPaymentstatus("已缴费");
+            }
+            orderInfo.setOrderstatus(driverInfo.getDriverorderstatus());
+            orderInfo.setDatetime(driverInfo.getApplytime());
+            orderInfoService.updateByPrimaryKeySelective(orderInfo);
+            //提交事务
+            dataSourceTransactionManager.commit(status);
+            return resultVo.SUCCESS("成功");
+
         } catch (Exception e) {
+            //事务回滚
+            dataSourceTransactionManager.rollback(status);
             resultVo.Fail(402, "更新失败");
         }
         return resultVo;
@@ -183,6 +234,7 @@ public class DriverController {
 
     /**
      * 根据司机id获取司机申请信息
+     *
      * @param driverInfoId
      * @return
      */
@@ -205,13 +257,20 @@ public class DriverController {
         return resultVo;
     }
 
+    /**
+     * 删除司机申请
+     *
+     * @param driverInfoId
+     * @return
+     */
+
     @DeleteMapping("/deleteDriverInfo")
     ResultVo deleteDriverInfo(@RequestParam Integer driverInfoId) {
 
         ResultVo resultVo = new ResultVo();
         try {
             int result = driverInfoService.deleteByPrimaryKey(driverInfoId);
-            if (result >0) {
+            if (result > 0) {
                 ResultVo success = resultVo.SUCCESS(result);
                 return success;
             } else {

@@ -38,6 +38,11 @@
       "sourceType": "com.sspu.config.Config"
     },
     {
+      "name": "path.order-number",
+      "type": "java.lang.String",
+      "sourceType": "com.sspu.config.Config"
+    },
+    {
       "name": "path.page-num",
       "type": "java.lang.Integer",
       "sourceType": "com.sspu.config.Config"

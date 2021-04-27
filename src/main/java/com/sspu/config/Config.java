@@ -18,5 +18,7 @@ public class Config {
 
    private Integer driverInfoId;
 
+   private String orderNumber;
+
 }
 

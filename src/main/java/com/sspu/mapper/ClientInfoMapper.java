@@ -2,6 +2,7 @@ package com.sspu.mapper;
 
 import com.sspu.entity.ClientInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface ClientInfoMapper {
 
     List<ClientInfo> findAllClientInfo();
 
-    int selectByUniqueIdAndPassword(String clientuniqueid, String clientpassword);
+    int selectByUniqueIdAndPassword(@Param("clientuniqueid") String clientuniqueid, @Param("clientpassword") String clientpassword);
 
     ClientInfo selectByClientUniqueId(String clientuniqueid);
 }

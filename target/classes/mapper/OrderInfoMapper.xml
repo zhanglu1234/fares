@@ -10,18 +10,19 @@
     <result column="paymentStatus" jdbcType="VARCHAR" property="paymentstatus" />
     <result column="paymentTime" jdbcType="TIMESTAMP" property="paymenttime" />
     <result column="eventType" jdbcType="VARCHAR" property="eventtype" />
+    <result column="orderCarNumber" jdbcType="VARCHAR" property="ordercarnumber" />
     <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
     <result column="orderClientId" jdbcType="INTEGER" property="orderclientid" />
     <result column="orderDriverInfoId" jdbcType="INTEGER" property="orderdriverinfoid" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    orderNumber, orderStatus, payment, paymentStatus, paymentTime, eventType, `dateTime`, 
-    orderClientId, orderDriverInfoId
+    orderNumber, orderStatus, payment, paymentStatus, paymentTime, eventType, orderCarNumber,
+    `dateTime`, orderClientId, orderDriverInfoId
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from orderInfo
     where orderNumber = #{ordernumber,jdbcType=VARCHAR}
@@ -33,14 +34,14 @@
   </delete>
   <insert id="insert" parameterType="com.sspu.entity.OrderInfo">
     <!--@mbg.generated-->
-    insert into orderInfo (orderNumber, orderStatus, payment, 
-      paymentStatus, paymentTime, eventType, 
-      `dateTime`, orderClientId, orderDriverInfoId
-      )
-    values (#{ordernumber,jdbcType=VARCHAR}, #{orderstatus,jdbcType=VARCHAR}, #{payment,jdbcType=DECIMAL}, 
-      #{paymentstatus,jdbcType=VARCHAR}, #{paymenttime,jdbcType=TIMESTAMP}, #{eventtype,jdbcType=VARCHAR}, 
-      #{datetime,jdbcType=TIMESTAMP}, #{orderclientid,jdbcType=INTEGER}, #{orderdriverinfoid,jdbcType=INTEGER}
-      )
+    insert into orderInfo (orderNumber, orderStatus, payment,
+      paymentStatus, paymentTime, eventType,
+      orderCarNumber, `dateTime`, orderClientId,
+      orderDriverInfoId)
+    values (#{ordernumber,jdbcType=VARCHAR}, #{orderstatus,jdbcType=VARCHAR}, #{payment,jdbcType=DECIMAL},
+      #{paymentstatus,jdbcType=VARCHAR}, #{paymenttime,jdbcType=TIMESTAMP}, #{eventtype,jdbcType=VARCHAR},
+      #{ordercarnumber,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, #{orderclientid,jdbcType=INTEGER},
+      #{orderdriverinfoid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.sspu.entity.OrderInfo">
     <!--@mbg.generated-->
@@ -63,6 +64,9 @@
       </if>
       <if test="eventtype != null">
         eventType,
+      </if>
+      <if test="ordercarnumber != null">
+        orderCarNumber,
       </if>
       <if test="datetime != null">
         `dateTime`,
@@ -92,6 +96,9 @@
       </if>
       <if test="eventtype != null">
         #{eventtype,jdbcType=VARCHAR},
+      </if>
+      <if test="ordercarnumber != null">
+        #{ordercarnumber,jdbcType=VARCHAR},
       </if>
       <if test="datetime != null">
         #{datetime,jdbcType=TIMESTAMP},
@@ -123,6 +130,9 @@
       <if test="eventtype != null">
         eventType = #{eventtype,jdbcType=VARCHAR},
       </if>
+      <if test="ordercarnumber != null">
+        orderCarNumber = #{ordercarnumber,jdbcType=VARCHAR},
+      </if>
       <if test="datetime != null">
         `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       </if>
@@ -133,8 +143,16 @@
         orderDriverInfoId = #{orderdriverinfoid,jdbcType=INTEGER},
       </if>
     </set>
-    where orderNumber = #{ordernumber,jdbcType=VARCHAR}
+    where 1=1
+      <if test="ordernumber != null">
+        and  orderNumber = #{ordernumber,jdbcType=VARCHAR}
+      </if>
+    <if test="orderdriverinfoid != null">
+      and  orderDriverInfoId = #{orderdriverinfoid,jdbcType=VARCHAR}
+    </if>
+
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.sspu.entity.OrderInfo">
     <!--@mbg.generated-->
     update orderInfo
@@ -143,10 +161,24 @@
       paymentStatus = #{paymentstatus,jdbcType=VARCHAR},
       paymentTime = #{paymenttime,jdbcType=TIMESTAMP},
       eventType = #{eventtype,jdbcType=VARCHAR},
+      orderCarNumber = #{ordercarnumber,jdbcType=VARCHAR},
       `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       orderClientId = #{orderclientid,jdbcType=INTEGER},
       orderDriverInfoId = #{orderdriverinfoid,jdbcType=INTEGER}
     where orderNumber = #{ordernumber,jdbcType=VARCHAR}
   </update>
-<!--  *************************************************************************************-->
+
+<!--获取订单所有信息-->
+  <select
+  id="findAllOrderList" resultMap="BaseResultMap">
+    select *
+    from orderInfo
+    where 1=1
+    <if test="ordernumber!=''">
+      and  orderNumber=#{ordernumber,jdbcType=VARCHAR}
+    </if>
+    order by dateTime desc
+  </select>
+  <!--  *************************************************************************************-->
+
 </mapper>

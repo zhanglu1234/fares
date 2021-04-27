@@ -2,6 +2,8 @@ package com.sspu.service;
 
 import com.sspu.entity.OrderInfo;
 
+import java.util.List;
+
 public interface OrderInfoService {
 
 
@@ -17,6 +19,9 @@ public interface OrderInfoService {
 
     int updateByPrimaryKey(OrderInfo record);
 
+    List<OrderInfo> findAllOrderList(String ordernumber);
+
 }
+
 
 
