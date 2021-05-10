@@ -3,8 +3,10 @@ package com.sspu;
 import com.sspu.config.Config;
 import com.sspu.entity.ClientInfo;
 import com.sspu.entity.DriverInfo;
+import com.sspu.entity.OrderInfo;
 import com.sspu.mapper.ClientInfoMapper;
 import com.sspu.mapper.DriverInfoMapper;
+import com.sspu.mapper.OrderInfoMapper;
 import com.sspu.wx.config.WxConfig;
 import com.sspu.wx.entity.TokenEntity;
 import com.sspu.wx.utils.TokenUtils;
@@ -30,13 +32,20 @@ class FaresApplicationTests {
 
     @Autowired
     ClientInfoMapper clientInfoMapper;
-    @Test
-    void contextLoads5() throws Exception{
-        List<ClientInfo> allClientInfo = clientInfoMapper.findAllClientInfo();
-        for (int i = 0; i <allClientInfo.size() ; i++) {
-            System.out.println(clientInfoMapper.findAllClientInfo().get(i).getClientuniqueid());
-        }
-    }
+
+    @Autowired
+    OrderInfoMapper orderInfoMapper;
+//    @Test
+//    void contextLoads5() throws Exception{
+//        List<Object> allOrderList = orderInfoMapper.findAllOrderList("");
+//        for (int i = 0; i < allOrderList.size(); i++) {
+//            System.out.println(allOrderList);
+//        }
+//
+//
+//    }
+
+
     @Test
     void contextLoads6() throws Exception{
 

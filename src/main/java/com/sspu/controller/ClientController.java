@@ -1,7 +1,13 @@
 package com.sspu.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.sspu.config.Config;
 import com.sspu.entity.ClientInfo;
+import com.sspu.entity.OrderInfo;
 import com.sspu.service.ClientInfoService;
+import com.sspu.utils.JwtUtils;
+import com.sspu.utils.Temps;
 import com.sspu.vo.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +17,17 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/ClientInfo")
+@RequestMapping("/clientInfo")
 public class ClientController {
 
     @Autowired
     ClientInfoService clientInfoService;
+
+    @Autowired
+    Config config;
+
+    @Autowired
+    Temps temps;
 
     @GetMapping("/selectByClientId")
     ResultVo selectByClientId(@RequestParam Integer clientId) {
@@ -29,30 +41,51 @@ public class ClientController {
         return resultVo;
     }
 
-    @GetMapping("/findAllClientInfo")
-    ResultVo findAllClientInfo() {
+    /**
+     * 后台客户信息展示
+     * @param config
+     * @return
+     */
+
+    @PostMapping("/findAllClientInfo")
+    ResultVo findAllClientInfo(@RequestBody Config config) {
         ResultVo resultVo = new ResultVo();
+        PageHelper.startPage(config.getPageNum(), config.getPageSize());
         try {
-            List<ClientInfo> list = clientInfoService.findAllClientInfo();
-            resultVo.SUCCESS(list);
+            List<ClientInfo> allClientInfo = clientInfoService.findAllClientInfo(config.getClientId());
+            if (allClientInfo != null) {
+                PageInfo<ClientInfo> orderInfoPageInfo = new PageInfo<>(allClientInfo);
+                return resultVo.SUCCESS(orderInfoPageInfo);
+            } else {
+                resultVo.Fail(402, "没有申请记录");
+            }
         } catch (Exception e) {
             resultVo.Fail(400, "无法获取用户列表");
         }
         return resultVo;
     }
 
-    @PostMapping("/insertClientInfo")
-    ResultVo insertClientInfo(@RequestBody ClientInfo clientInfo) {
-        ResultVo resultVo = new ResultVo();
+    /**
+     * 添加客户信息
+     * @param clientInfo
+     * @return
+     */
 
-        try {
-            int data = clientInfoService.insertSelective(clientInfo);
-            resultVo.SUCCESS(data);
-        } catch (Exception e) {
-            resultVo.Fail(400, "添加用户信息失败");
+    @PostMapping("/insertClientInfo")
+    ResultVo insertClientInfo(@RequestBody ClientInfo clientInfo){
+        ResultVo resultVo = new ResultVo();
+        //密码加密
+        String encodedPassword = temps.getDigest(Temps.encode(clientInfo.getClientpassword()));
+        clientInfo.setClientpassword(encodedPassword);
+        try{
+            int i = clientInfoService.insertSelective(clientInfo);
+            return  resultVo.SUCCESS(i);
+        }catch(Exception e){
+            resultVo.Fail(402,"错误");
         }
-        return resultVo;
+        return  resultVo;
     }
+
 
     @DeleteMapping("/deleteClientInfo")
     ResultVo deleteInfoByClientId(@RequestParam Integer clientId) {
@@ -69,6 +102,9 @@ public class ClientController {
     @PatchMapping("/updateClientInfo")
     ResultVo updateClientInfo(@RequestBody ClientInfo clientInfo) {
         ResultVo resultVo = new ResultVo();
+        //密码加密
+        String encodedPassword = temps.getDigest(Temps.encode(clientInfo.getClientpassword()));
+        clientInfo.setClientpassword(encodedPassword);
         try {
             int data = clientInfoService.updateByPrimaryKeySelective(clientInfo);
 //            updateByPrimaryKey更新后的时间信息为null

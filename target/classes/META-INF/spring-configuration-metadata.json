@@ -28,6 +28,11 @@
       "sourceType": "com.sspu.utils.JwtUtils"
     },
     {
+      "name": "path.client-id",
+      "type": "java.lang.Integer",
+      "sourceType": "com.sspu.config.Config"
+    },
+    {
       "name": "path.driver-info-id",
       "type": "java.lang.Integer",
       "sourceType": "com.sspu.config.Config"

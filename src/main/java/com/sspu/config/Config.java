@@ -20,5 +20,7 @@ public class Config {
 
    private String orderNumber;
 
+   private Integer clientId;
+
 }
 

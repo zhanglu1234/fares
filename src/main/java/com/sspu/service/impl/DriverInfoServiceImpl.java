@@ -56,7 +56,7 @@ public class DriverInfoServiceImpl implements DriverInfoService {
 
     @Override
     public List<DriverInfo> listBySelectedContent(String driveridnumber, String driverorderstatus, String orderBy) {
-        return driverInfoMapper.selectUntreatedInfoDesc(driveridnumber, driverorderstatus, orderBy);
+        return driverInfoMapper.listBySelectedContent(driveridnumber, driverorderstatus, orderBy);
     }
 
     @Override

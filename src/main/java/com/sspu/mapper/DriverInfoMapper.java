@@ -23,7 +23,7 @@ public interface DriverInfoMapper {
 
     List<DriverInfo> selectAllByDriverIdNumber(String driveridnumber);
 
-    List<DriverInfo>  selectUntreatedInfoDesc(String driveridnumber, @Param("driverorderstatus") String driverorderstatus,@Param("orderBy") String orderBy);
+    List<DriverInfo> listBySelectedContent( @Param("driveridnumber") String driveridnumber, @Param("driverorderstatus") String driverorderstatus, @Param("orderBy") String orderBy);
 
 //    List<DriverInfo> selectAllInfoOrderBy(String driveridnumber,@Param("orderBy") String orderBy);
 

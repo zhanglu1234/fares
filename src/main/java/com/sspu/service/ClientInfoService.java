@@ -20,7 +20,7 @@ public interface ClientInfoService {
 
     int updateByPrimaryKey(ClientInfo record);
 
-    List<ClientInfo> findAllClientInfo();
+    List<ClientInfo> findAllClientInfo(Integer clientid);
 
     int selectByUniqueIdAndPassword(String clientuniqueid, String clientpassword);
 

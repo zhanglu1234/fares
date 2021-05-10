@@ -1,6 +1,7 @@
 package com.sspu.service;
 
 import com.sspu.entity.OrderInfo;
+import com.sspu.vo.DriverClientOrderVo;
 
 import java.util.List;
 
@@ -19,7 +20,9 @@ public interface OrderInfoService {
 
     int updateByPrimaryKey(OrderInfo record);
 
-    List<OrderInfo> findAllOrderList(String ordernumber);
+    List<DriverClientOrderVo> findAllOrderList(String ordernumber);
+
+    int updateOrderStatusByOrderNumber(OrderInfo orderInfo);
 
 }
 

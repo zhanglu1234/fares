@@ -9,7 +9,7 @@
     <result column="clientPassword" jdbcType="VARCHAR" property="clientpassword" />
     <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
     <result column="clientName" jdbcType="VARCHAR" property="clientname" />
-    <result column="clientPhone" jdbcType="INTEGER" property="clientphone" />
+    <result column="clientPhone" jdbcType="VARCHAR" property="clientphone" />
     <result column="clientLoginError" jdbcType="INTEGER" property="clientloginerror" />
     <result column="clientAllowedLoginTime" jdbcType="TIMESTAMP" property="clientallowedlogintime" />
   </resultMap>
@@ -36,7 +36,7 @@
       clientName, clientPhone, clientLoginError,
       clientAllowedLoginTime)
     values (#{clientuniqueid,jdbcType=VARCHAR}, #{clientpassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP},
-      #{clientname,jdbcType=VARCHAR}, #{clientphone,jdbcType=INTEGER}, #{clientloginerror,jdbcType=INTEGER},
+      #{clientname,jdbcType=VARCHAR}, #{clientphone,jdbcType=VARCHAR}, #{clientloginerror,jdbcType=INTEGER},
       #{clientallowedlogintime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="clientId" keyProperty="clientid" parameterType="com.sspu.entity.ClientInfo" useGeneratedKeys="true">
@@ -79,7 +79,7 @@
         #{clientname,jdbcType=VARCHAR},
       </if>
       <if test="clientphone != null">
-        #{clientphone,jdbcType=INTEGER},
+        #{clientphone,jdbcType=VARCHAR},
       </if>
       <if test="clientloginerror != null">
         #{clientloginerror,jdbcType=INTEGER},
@@ -106,7 +106,7 @@
         clientName = #{clientname,jdbcType=VARCHAR},
       </if>
       <if test="clientphone != null">
-        clientPhone = #{clientphone,jdbcType=INTEGER},
+        clientPhone = #{clientphone,jdbcType=VARCHAR},
       </if>
       <if test="clientloginerror != null">
         clientLoginError = #{clientloginerror,jdbcType=INTEGER},
@@ -124,14 +124,20 @@
       clientPassword = #{clientpassword,jdbcType=VARCHAR},
       `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       clientName = #{clientname,jdbcType=VARCHAR},
-      clientPhone = #{clientphone,jdbcType=INTEGER},
+      clientPhone = #{clientphone,jdbcType=VARCHAR},
       clientLoginError = #{clientloginerror,jdbcType=INTEGER},
       clientAllowedLoginTime = #{clientallowedlogintime,jdbcType=TIMESTAMP}
     where clientId = #{clientid,jdbcType=INTEGER}
   </update>
 <!--  ****************************************************************************-->
+
+<!--  根据条件查询客户信息列表-->
     <select id="findAllClientInfo" resultMap="BaseResultMap">
       select * from clientInfo
+      where 1=1
+      <if test="clientid != null">
+       and clientId = #{clientid,jdbcType=INTEGER}
+      </if>
     </select>
   <select id="selectByUniqueIdAndPassword" parameterType="com.sspu.entity.ClientInfo" resultType="int">
     select count(*)

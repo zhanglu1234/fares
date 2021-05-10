@@ -21,9 +21,9 @@ public interface ClientInfoMapper {
 
     int updateByPrimaryKey(ClientInfo record);
 
-    List<ClientInfo> findAllClientInfo();
+    List<ClientInfo> findAllClientInfo(@Param("clientid") Integer clientid);
 
     int selectByUniqueIdAndPassword(@Param("clientuniqueid") String clientuniqueid, @Param("clientpassword") String clientpassword);
 
-    ClientInfo selectByClientUniqueId(String clientuniqueid);
+    ClientInfo selectByClientUniqueId(@Param("clientuniqueid") String clientuniqueid);
 }

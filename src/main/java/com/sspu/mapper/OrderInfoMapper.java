@@ -1,10 +1,12 @@
 package com.sspu.mapper;
 
 import com.sspu.entity.OrderInfo;
+import com.sspu.vo.DriverClientOrderVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
 
 @Mapper
 public interface OrderInfoMapper {
@@ -20,5 +22,7 @@ public interface OrderInfoMapper {
 
     int updateByPrimaryKey(OrderInfo record);
 
-    List<OrderInfo> findAllOrderList(@Param("ordernumber") String ordernumber);
+    List<DriverClientOrderVo> findAllOrderList(@Param("ordernumber") String ordernumber);
+
+    int updateOrderStatusByOrderNumber(OrderInfo orderInfo);
 }

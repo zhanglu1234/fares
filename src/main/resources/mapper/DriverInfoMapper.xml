@@ -181,12 +181,15 @@
     from driverInfo
     where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
   </select>
-
-  <select id="selectUntreatedInfoDesc" resultMap="BaseResultMap">
+<!--小程序根据条件筛选信息-->
+  <select id="listBySelectedContent" resultMap="BaseResultMap">
     select *
     from driverInfo
     where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
-    <if test="driverorderstatus == '0'.toString()">
+    <if test="driverorderstatus == '已提交申请'" >
+      and  driverOrderStatus=#{driverorderstatus,jdbcType=VARCHAR}
+    </if>
+    <if test="driverorderstatus == '已审核'" >
       and  driverOrderStatus=#{driverorderstatus,jdbcType=VARCHAR}
     </if>
     <if test="orderBy == 'DESC'">
@@ -194,13 +197,26 @@
     </if>
   </select>
 
+<!--  后台获取司机申请信息-->
+<!--  <select id="findAllDriverApplyInfo" resultMap="BaseResultMap">-->
+<!--    select *-->
+<!--    from driverInfo-->
+<!--    where 1=1-->
+<!--    <if test="driverinfoid !=null ">-->
+<!--      and  driverinfoid=#{driverinfoid,jdbcType=INTEGER}-->
+<!--    </if>-->
+<!--    order by applyTime desc-->
+<!--  </select>-->
+
+  <!--  后台获取司机申请信息(new)-->
   <select id="findAllDriverApplyInfo" resultMap="BaseResultMap">
-    select *
+    select driverInfoId, driverName,driverIdNumber,driverPhone,driverApplyType,driverCarType,driverCarNumber,driverInfoSource,applyTime,
+    case WHEN driverOrderStatus='0' THEN "已提交申请" WHEN driverOrderStatus='1' THEN "已审核" WHEN driverOrderStatus='-1' THEN "申请无效" ELSE "其他" END as driverOrderStatus
     from driverInfo
     where 1=1
     <if test="driverinfoid !=null ">
       and  driverinfoid=#{driverinfoid,jdbcType=INTEGER}
     </if>
-
+    order by applyTime desc
   </select>
 </mapper>

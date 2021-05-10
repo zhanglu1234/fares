@@ -1,5 +1,6 @@
 package com.sspu.service.impl;
 
+import com.sspu.vo.DriverClientOrderVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -48,8 +49,13 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     @Override
-    public List<OrderInfo> findAllOrderList(String ordernumber) {
+    public List<DriverClientOrderVo> findAllOrderList(String ordernumber) {
         return orderInfoMapper.findAllOrderList(ordernumber);
+    }
+
+    @Override
+    public int updateOrderStatusByOrderNumber(OrderInfo orderInfo) {
+        return orderInfoMapper.updateOrderStatusByOrderNumber(orderInfo);
     }
 
 

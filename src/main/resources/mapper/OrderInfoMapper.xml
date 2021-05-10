@@ -168,17 +168,32 @@
     where orderNumber = #{ordernumber,jdbcType=VARCHAR}
   </update>
 
-<!--获取订单所有信息-->
-  <select
-  id="findAllOrderList" resultMap="BaseResultMap">
-    select *
+
+  <!--获取订单所有信息-->
+  <select id="findAllOrderList" resultType="com.sspu.vo.DriverClientOrderVo">
+    select orderNumber,payment,paymentTime,orderCarNumber,orderInfo.dateTime,clientUniqueId,driverName,
+    case WHEN orderStatus='1' THEN "订单有效" WHEN orderStatus='-1' THEN "订单无效"  ELSE "其他" END as orderStatus,
+    case WHEN paymentStatus='0' THEN "未缴费" WHEN paymentStatus='1' THEN "缴费成功" WHEN paymentStatus='-1' THEN "缴费失败"  ELSE "其他" END as paymentStatus
     from orderInfo
+    left join driverInfo on orderInfo.orderDriverInfoId=driverInfo.driverInfoId
+    left join clientInfo on orderInfo.orderClientId=clientInfo.clientId
     where 1=1
-    <if test="ordernumber!=''">
-      and  orderNumber=#{ordernumber,jdbcType=VARCHAR}
+    <if test="ordernumber != ''">
+      and  orderInfo.orderNumber = #{ordernumber,jdbcType=VARCHAR}
     </if>
-    order by dateTime desc
+    order by orderInfo.dateTime desc
   </select>
+
+  <!--订单无效-->
+  <update id="updateOrderStatusByOrderNumber">
+    update orderInfo
+    <set>
+      <if test="orderstatus.equals('-1')">
+        orderStatus = #{orderstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+     where orderNumber = #{ordernumber,jdbcType=VARCHAR}
+  </update>
   <!--  *************************************************************************************-->
 
 </mapper>

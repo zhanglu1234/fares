@@ -48,8 +48,8 @@ public class ClientInfoServiceImpl implements ClientInfoService {
     }
 
     @Override
-    public List<ClientInfo> findAllClientInfo() {
-        return clientInfoMapper.findAllClientInfo();
+    public List<ClientInfo> findAllClientInfo(Integer clientid) {
+        return clientInfoMapper.findAllClientInfo(clientid);
     }
 
 

@@ -55,56 +55,15 @@ public class DriverController {
     @Autowired
     private DataSourceTransactionManager dataSourceTransactionManager;
 
-    @Transactional
-    @PostMapping("/insertInfo")
-    ResultVo insertDriverInfo(@RequestBody DriverInfo driverInfo) {
-        ResultVo resultVo = new ResultVo();
-        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
-        defaultTransactionDefinition.setName("translation_InsertDriverInfo");
-        defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-        TransactionStatus status = dataSourceTransactionManager.getTransaction(defaultTransactionDefinition);
-        //验证用户身份证号码
-        boolean driverIdNumberResult = checkIdNumber.check(driverInfo.getDriveridnumber());
-        //验证手机号码
-        boolean phoneLegal = checkPhoneNumber.isPhoneLegal(driverInfo.getDriverphone() + "");
-        if (driverIdNumberResult && phoneLegal) {
-            try {
-                driverInfoService.insertSelective(driverInfo);
-                OrderInfo orderInfo = new OrderInfo();
-                String orderId = UUID.randomUUID().toString().replaceAll("-", "");
-                orderInfo.setOrdernumber(orderId);
-                orderInfo.setOrderstatus(driverInfo.getDriverorderstatus());
-                orderInfo.setOrderdriverinfoid(driverInfo.getDriverinfoid());
-                orderInfo.setEventtype(driverInfo.getDriverapplytype());
-                orderInfo.setOrdercarnumber(driverInfo.getDrivercarnumber());
-                System.out.println(orderInfo);
-                orderInfoService.insertSelective(orderInfo);
-                dataSourceTransactionManager.commit(status);
-                resultVo.SUCCESS("成功");
-
-            } catch (Exception e) {
-                dataSourceTransactionManager.rollback(status);
-                resultVo.Fail(402, "失败");
-//            throw e;
-            }
-        } else {
-            resultVo.Fail(402, "申请失败！");
-        }
-        return resultVo;
-    }
-
     /**
-     * 获取某一司机申请出/入园所有记录
+     * 小程序获取某一司机申请出/入园所有记录
      *
      * @param driverIdNumber
      * @return
      */
     @GetMapping("/driverIdNumber")
     ResultVo selectDriverAllInfoByDriverIdNumber(@RequestParam String driverIdNumber) {
-
         ResultVo resultVo = new ResultVo();
-
-
         try {
             List<DriverInfo> list = driverInfoService.selectAllByDriverIdNumber(driverIdNumber);
             System.out.println(list.size());
@@ -121,7 +80,7 @@ public class DriverController {
     }
 
     /**
-     * 展示司机申请信息
+     * 小程序展示司机申请信息
      *
      * @param driveridnumber
      * @param driverorderstatus
@@ -131,12 +90,20 @@ public class DriverController {
 
     @GetMapping("/listBySelectedContent")
     ResultVo listBySelectedContent(@RequestParam String driveridnumber, String driverorderstatus, String orderBy) {
-
         ResultVo resultVo = new ResultVo();
         String sort = orderBy.equals("0") ? "DESC" : "ASC";
+        String sortStatus;
+        if (driverorderstatus.equals("0")) {
+            sortStatus = "已提交申请";
+        } else if (driverorderstatus.equals("1")) {
+            sortStatus = "已审核";
+        } else {
+            sortStatus = "全部信息";
+        }
+
         try {
             List<DriverInfo> list;
-            list = driverInfoService.listBySelectedContent(driveridnumber, driverorderstatus, sort);
+            list = driverInfoService.listBySelectedContent(driveridnumber, sortStatus, sort);
             return resultVo.SUCCESS(list);
         } catch (Exception e) {
             System.out.println("错误");
@@ -144,26 +111,6 @@ public class DriverController {
         return resultVo;
     }
 
-    /**
-     * 小程序获取所有用户信息
-     * @return
-     */
-
-//    @GetMapping("/getAllDriverInfo")
-//    ResultVo getAllDriverInfo() {
-//        ResultVo resultVo = new ResultVo();
-//        try {
-//            List<DriverInfo> allDriverApplyInfo = driverInfoService.findAllDriverApplyInfo();
-//            if (allDriverApplyInfo != null) {
-//                return resultVo.SUCCESS(allDriverApplyInfo);
-//            } else {
-//                resultVo.Fail(402, "没有申请记录");
-//            }
-//        } catch (Exception e) {
-//            resultVo.Fail(402, "没有申请记录");
-//        }
-//        return resultVo;
-//    }
 
     /**
      * 后台系统申请列表+分页
@@ -190,8 +137,28 @@ public class DriverController {
         return resultVo;
     }
 
+    @PostMapping("/insertInfo")
+    ResultVo insertDriverInfo(@RequestBody DriverInfo driverInfo) {
+        ResultVo resultVo = new ResultVo();
+        //验证用户身份证号码
+        boolean driverIdNumberResult = checkIdNumber.check(driverInfo.getDriveridnumber());
+        //验证手机号码
+        boolean phoneLegal = checkPhoneNumber.isPhoneLegal(driverInfo.getDriverphone() + "");
+        if (driverIdNumberResult && phoneLegal) {
+            try {
+                driverInfoService.insertSelective(driverInfo);
+                resultVo.SUCCESS("成功");
+            } catch (Exception e) {
+                resultVo.Fail(402, "失败");
+            }
+        } else {
+            resultVo.Fail(402, "申请失败！");
+        }
+        return resultVo;
+    }
+
     /**
-     * 后台更新司机申请信息
+     * 后台审核司机申请信息
      *
      * @param driverInfo
      * @return
@@ -205,25 +172,26 @@ public class DriverController {
         defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
         //开启事务
         TransactionStatus status = dataSourceTransactionManager.getTransaction(defaultTransactionDefinition);
-
         try {
-            driverInfoService.updateByPrimaryKeySelective(driverInfo);
+
             OrderInfo orderInfo = new OrderInfo();
+            String orderId = UUID.randomUUID().toString().replaceAll("-", "");
+            orderInfo.setOrdernumber(orderId);
             orderInfo.setOrderdriverinfoid(driverInfo.getDriverinfoid());
-            orderInfo.setOrdercarnumber(driverInfo.getDrivercarnumber());
+//            orderInfo.setOrdercarnumber(driverInfo.getDrivercarnumber());
+//            orderInfo.setEventtype(driverInfo.getDriverapplytype());
+//            orderInfo.setDatetime(driverInfo.getApplytime());
             if (driverInfo.getDriverorderstatus().equals("1")) {
-                orderInfo.setPaymentstatus("未缴费");
+                orderInfo.setOrderstatus(driverInfo.getDriverorderstatus());
+            } else {
+                return resultVo.Fail(402, "未生成订单");
             }
-            if (driverInfo.getDriverorderstatus().equals("2")) {
-                orderInfo.setPaymentstatus("已缴费");
-            }
-            orderInfo.setOrderstatus(driverInfo.getDriverorderstatus());
-            orderInfo.setDatetime(driverInfo.getApplytime());
-            orderInfoService.updateByPrimaryKeySelective(orderInfo);
+            driverInfoService.updateByPrimaryKeySelective(driverInfo);
+//            生成订单
+            orderInfoService.insertSelective(orderInfo);
             //提交事务
             dataSourceTransactionManager.commit(status);
             return resultVo.SUCCESS("成功");
-
         } catch (Exception e) {
             //事务回滚
             dataSourceTransactionManager.rollback(status);
@@ -241,7 +209,6 @@ public class DriverController {
 
     @GetMapping("/infoByDriverInfoId")
     ResultVo selectInfoByDriverInfoId(@RequestParam Integer driverInfoId) {
-
         ResultVo resultVo = new ResultVo();
         try {
             DriverInfo driverInfo = driverInfoService.selectByPrimaryKey(driverInfoId);
@@ -258,7 +225,7 @@ public class DriverController {
     }
 
     /**
-     * 删除司机申请
+     * 后台删除司机申请信息
      *
      * @param driverInfoId
      * @return
@@ -266,7 +233,6 @@ public class DriverController {
 
     @DeleteMapping("/deleteDriverInfo")
     ResultVo deleteDriverInfo(@RequestParam Integer driverInfoId) {
-
         ResultVo resultVo = new ResultVo();
         try {
             int result = driverInfoService.deleteByPrimaryKey(driverInfoId);
