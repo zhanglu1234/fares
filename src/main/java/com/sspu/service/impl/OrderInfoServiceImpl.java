@@ -17,9 +17,10 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Resource
     private OrderInfoMapper orderInfoMapper;
 
+
     @Override
-    public int deleteByPrimaryKey(String ordernumber) {
-        return orderInfoMapper.deleteByPrimaryKey(ordernumber);
+    public int deleteByPrimaryKey(Integer id) {
+        return orderInfoMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -33,8 +34,8 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     @Override
-    public OrderInfo selectByPrimaryKey(String ordernumber) {
-        return orderInfoMapper.selectByPrimaryKey(ordernumber);
+    public OrderInfo selectByPrimaryKey(Integer id) {
+        return orderInfoMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -49,8 +50,8 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     @Override
-    public List<DriverClientOrderVo> findAllOrderList(String ordernumber) {
-        return orderInfoMapper.findAllOrderList(ordernumber);
+    public List<DriverClientOrderVo> findAllOrderList(Integer id) {
+        return orderInfoMapper.findAllOrderList(id);
     }
 
     @Override
@@ -60,6 +61,10 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
 
 }
+
+
+
+
 
 
 

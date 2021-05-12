@@ -4,53 +4,60 @@
   <resultMap id="BaseResultMap" type="com.sspu.entity.ClientInfo">
     <!--@mbg.generated-->
     <!--@Table clientInfo-->
-    <id column="clientId" jdbcType="INTEGER" property="clientid" />
+    <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="clientUniqueId" jdbcType="VARCHAR" property="clientuniqueid" />
     <result column="clientPassword" jdbcType="VARCHAR" property="clientpassword" />
-    <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
     <result column="clientName" jdbcType="VARCHAR" property="clientname" />
     <result column="clientPhone" jdbcType="VARCHAR" property="clientphone" />
     <result column="clientLoginError" jdbcType="INTEGER" property="clientloginerror" />
     <result column="clientAllowedLoginTime" jdbcType="TIMESTAMP" property="clientallowedlogintime" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="isVisible" jdbcType="VARCHAR" property="isvisible" />
+    <result column="createBy" jdbcType="VARCHAR" property="createby" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    clientId, clientUniqueId, clientPassword, `dateTime`, clientName, clientPhone, clientLoginError,
-    clientAllowedLoginTime
+    ID, clientUniqueId, clientPassword, clientName, clientPhone, clientLoginError, clientAllowedLoginTime,
+    createTime, updateTime, isVisible, createBy
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select
     <include refid="Base_Column_List" />
     from clientInfo
-    where clientId = #{clientid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
     delete from clientInfo
-    where clientId = #{clientid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="clientId" keyProperty="clientid" parameterType="com.sspu.entity.ClientInfo" useGeneratedKeys="true">
+  <insert id="insert" parameterType="com.sspu.entity.ClientInfo">
     <!--@mbg.generated-->
-    insert into clientInfo (clientUniqueId, clientPassword, `dateTime`,
+    insert into clientInfo (ID, clientUniqueId, clientPassword,
       clientName, clientPhone, clientLoginError,
-      clientAllowedLoginTime)
-    values (#{clientuniqueid,jdbcType=VARCHAR}, #{clientpassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP},
+      clientAllowedLoginTime, createTime,
+      updateTime, isVisible, createBy
+      )
+    values (#{id,jdbcType=INTEGER}, #{clientuniqueid,jdbcType=VARCHAR}, #{clientpassword,jdbcType=VARCHAR},
       #{clientname,jdbcType=VARCHAR}, #{clientphone,jdbcType=VARCHAR}, #{clientloginerror,jdbcType=INTEGER},
-      #{clientallowedlogintime,jdbcType=TIMESTAMP})
+      #{clientallowedlogintime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP},
+      #{updatetime,jdbcType=TIMESTAMP}, #{isvisible,jdbcType=VARCHAR}, #{createby,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" keyColumn="clientId" keyProperty="clientid" parameterType="com.sspu.entity.ClientInfo" useGeneratedKeys="true">
+  <insert id="insertSelective" parameterType="com.sspu.entity.ClientInfo">
     <!--@mbg.generated-->
     insert into clientInfo
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
       <if test="clientuniqueid != null">
         clientUniqueId,
       </if>
       <if test="clientpassword != null">
         clientPassword,
-      </if>
-      <if test="datetime != null">
-        `dateTime`,
       </if>
       <if test="clientname != null">
         clientName,
@@ -64,16 +71,28 @@
       <if test="clientallowedlogintime != null">
         clientAllowedLoginTime,
       </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="isvisible != null">
+        isVisible,
+      </if>
+      <if test="createby != null">
+        createBy,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="clientuniqueid != null">
         #{clientuniqueid,jdbcType=VARCHAR},
       </if>
       <if test="clientpassword != null">
         #{clientpassword,jdbcType=VARCHAR},
-      </if>
-      <if test="datetime != null">
-        #{datetime,jdbcType=TIMESTAMP},
       </if>
       <if test="clientname != null">
         #{clientname,jdbcType=VARCHAR},
@@ -87,6 +106,18 @@
       <if test="clientallowedlogintime != null">
         #{clientallowedlogintime,jdbcType=TIMESTAMP},
       </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isvisible != null">
+        #{isvisible,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.sspu.entity.ClientInfo">
@@ -98,9 +129,6 @@
       </if>
       <if test="clientpassword != null">
         clientPassword = #{clientpassword,jdbcType=VARCHAR},
-      </if>
-      <if test="datetime != null">
-        `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       </if>
       <if test="clientname != null">
         clientName = #{clientname,jdbcType=VARCHAR},
@@ -114,20 +142,35 @@
       <if test="clientallowedlogintime != null">
         clientAllowedLoginTime = #{clientallowedlogintime,jdbcType=TIMESTAMP},
       </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isvisible != null">
+        isVisible = #{isvisible,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null">
+        createBy = #{createby,jdbcType=VARCHAR},
+      </if>
     </set>
-    where clientId = #{clientid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.sspu.entity.ClientInfo">
     <!--@mbg.generated-->
     update clientInfo
     set clientUniqueId = #{clientuniqueid,jdbcType=VARCHAR},
       clientPassword = #{clientpassword,jdbcType=VARCHAR},
-      `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       clientName = #{clientname,jdbcType=VARCHAR},
       clientPhone = #{clientphone,jdbcType=VARCHAR},
       clientLoginError = #{clientloginerror,jdbcType=INTEGER},
-      clientAllowedLoginTime = #{clientallowedlogintime,jdbcType=TIMESTAMP}
-    where clientId = #{clientid,jdbcType=INTEGER}
+      clientAllowedLoginTime = #{clientallowedlogintime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      isVisible = #{isvisible,jdbcType=VARCHAR},
+      createBy = #{createby,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
   </update>
 <!--  ****************************************************************************-->
 
@@ -135,9 +178,10 @@
     <select id="findAllClientInfo" resultMap="BaseResultMap">
       select * from clientInfo
       where 1=1
-      <if test="clientid != null">
-       and clientId = #{clientid,jdbcType=INTEGER}
+      <if test="id != null">
+       and ID = #{id,jdbcType=INTEGER}
       </if>
+       and  isVisible = 1
     </select>
   <select id="selectByUniqueIdAndPassword" parameterType="com.sspu.entity.ClientInfo" resultType="int">
     select count(*)

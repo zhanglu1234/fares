@@ -8,23 +8,27 @@ import java.util.List;
 public interface OrderInfoService {
 
 
-    int deleteByPrimaryKey(String ordernumber);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(OrderInfo record);
 
     int insertSelective(OrderInfo record);
 
-    OrderInfo selectByPrimaryKey(String ordernumber);
+    OrderInfo selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(OrderInfo record);
 
     int updateByPrimaryKey(OrderInfo record);
 
-    List<DriverClientOrderVo> findAllOrderList(String ordernumber);
+    List<DriverClientOrderVo> findAllOrderList(Integer id);
 
     int updateOrderStatusByOrderNumber(OrderInfo orderInfo);
 
 }
+
+
+
+
 
 
 

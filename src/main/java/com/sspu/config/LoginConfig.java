@@ -28,11 +28,11 @@ public class LoginConfig implements WebMvcConfigurer {
         registration.addPathPatterns("/**")
                 .excludePathPatterns("/clientLogin/**")
                 .excludePathPatterns("/applyInfo/**")
-//             .excludePathPatterns("/driverOrderInfo/**");
+//                .excludePathPatterns("/driverOrderInfo/**")
                 .excludePathPatterns("/test/**")
                 .excludePathPatterns("/getPicture/**")
 //                .excludePathPatterns("/order/**")
-                .excludePathPatterns("/businessLogin/**");
+               .excludePathPatterns("/businessLogin/**");
 
 
     }

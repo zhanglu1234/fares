@@ -1,21 +1,18 @@
 package com.sspu.mapper;
 
-import com.sspu.entity.ClientInfo;
 import com.sspu.entity.DriverInfo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Param;import java.util.List;
 
-import java.util.List;
 @Mapper
 public interface DriverInfoMapper {
-
-    int deleteByPrimaryKey(Integer driverinfoid);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(DriverInfo record);
 
     int insertSelective(DriverInfo record);
 
-    DriverInfo selectByPrimaryKey(Integer driverinfoid);
+    DriverInfo selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(DriverInfo record);
 
@@ -23,9 +20,7 @@ public interface DriverInfoMapper {
 
     List<DriverInfo> selectAllByDriverIdNumber(String driveridnumber);
 
-    List<DriverInfo> listBySelectedContent( @Param("driveridnumber") String driveridnumber, @Param("driverorderstatus") String driverorderstatus, @Param("orderBy") String orderBy);
+    List<DriverInfo> listBySelectedContent(@Param("driveridnumber") String driveridnumber, @Param("driverorderstatus") String driverorderstatus, @Param("orderBy") String orderBy);
 
-//    List<DriverInfo> selectAllInfoOrderBy(String driveridnumber,@Param("orderBy") String orderBy);
-
-    List<DriverInfo> findAllDriverApplyInfo(@Param("driverinfoid") Integer driverinfoid);
+    List<DriverInfo> findAllDriverApplyInfo(@Param("id") Integer id);
 }

@@ -8,46 +8,33 @@ import lombok.Data;
  * order_info
  */
 @Data
-public class OrderInfo {
+public class OrderInfo extends BaseInfo{
+
+
     /**
      * 订单号
      */
     private String ordernumber;
 
     /**
-     * 订单状态:-1订单无效，0申请入园，1审核订单，2同意申请
+     * 订单状态:-1订单无效，1订单有效
      */
     private String orderstatus;
 
     /**
      * 缴费金额
      */
-    private BigDecimal payment;
+    private BigDecimal orderpayment;
 
     /**
-     * 缴费状态：是否缴费
+     * 缴费状态：是否缴费 0未缴费 1已缴费 默认为0
      */
-    private String paymentstatus;
+    private String orderpaymentstatus;
 
     /**
      * 缴费时间
      */
-    private Date paymenttime;
-
-    /**
-     * 出入园区状态
-     */
-    private String eventtype;
-
-    /**
-     * 车牌号
-     */
-    private String ordercarnumber;
-
-    /**
-     * 出入园区时间
-     */
-    private Date datetime;
+    private Date orderpaymenttime;
 
     /**
      * 客户id

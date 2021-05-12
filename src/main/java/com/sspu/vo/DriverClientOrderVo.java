@@ -8,6 +8,8 @@ import java.util.Date;
 @Data
 public class DriverClientOrderVo {
 
+    private Integer id;
+
     /**
      * 订单号
      */
@@ -21,49 +23,45 @@ public class DriverClientOrderVo {
     /**
      * 缴费金额
      */
-    private BigDecimal payment;
+    private BigDecimal orderpayment;
 
     /**
      * 缴费状态：是否缴费
      */
-    private String paymentstatus;
+    private String orderpaymentstatus;
 
     /**
      * 缴费时间
      */
-    private Date paymenttime;
+    private Date orderpaymenttime;
 
-    /**
-     * 出入园区状态
-     */
-    private String eventtype;
+
 
     /**
      * 车牌号
      */
-    private String ordercarnumber;
+    private String drivercarnumber;
+
+
 
     /**
-     * 订单生成时间
+     *申请日期
      */
-    private Date datetime;
+    private Date applydate;
 
     /**
-     *
+     * 申请时段
      */
-    private Date applytime;
-    /**
-     * 客户id
-     */
-    private Integer orderclientid;
+    private String applytime;
 
     /**
-     * 司机id
+     * 司机姓名
      */
-    private Integer orderdriverinfoid;
-
     private String drivername;
 
+    /**
+     * 客户账号
+     */
     private String clientuniqueid;
 
 }

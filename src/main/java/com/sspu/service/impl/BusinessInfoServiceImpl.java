@@ -52,6 +52,9 @@ public class BusinessInfoServiceImpl implements BusinessInfoService {
         return businessInfoMapper.selectBusinessInfoByBusinessName(businessname);
     }
 
+
 }
+
+
 
 

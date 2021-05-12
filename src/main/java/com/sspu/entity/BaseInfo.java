@@ -8,9 +8,28 @@ import java.util.Date;
 @Data
 public class BaseInfo {
 
-//    public Integer id;
+    public Integer id;
 
-    public Date datetime;
+    /**
+     * 创建时间
+     */
+    private Date createtime=new Date();
+
+    /**
+     * 更新时间
+     */
+    private Date updatetime=new Date();
+
+
+    /**
+     * 创建人
+     */
+    private String createby;
+
+    /**
+     * 是否可见
+     */
+    private String isvisible;
 
 
 }

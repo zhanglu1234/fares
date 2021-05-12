@@ -4,46 +4,50 @@
   <resultMap id="BaseResultMap" type="com.sspu.entity.OrderInfo">
     <!--@mbg.generated-->
     <!--@Table orderInfo-->
-    <id column="orderNumber" jdbcType="VARCHAR" property="ordernumber" />
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="orderNumber" jdbcType="VARCHAR" property="ordernumber" />
     <result column="orderStatus" jdbcType="VARCHAR" property="orderstatus" />
-    <result column="payment" jdbcType="DECIMAL" property="payment" />
-    <result column="paymentStatus" jdbcType="VARCHAR" property="paymentstatus" />
-    <result column="paymentTime" jdbcType="TIMESTAMP" property="paymenttime" />
-    <result column="eventType" jdbcType="VARCHAR" property="eventtype" />
-    <result column="orderCarNumber" jdbcType="VARCHAR" property="ordercarnumber" />
-    <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
+    <result column="orderPayment" jdbcType="DECIMAL" property="orderpayment" />
+    <result column="orderPaymentStatus" jdbcType="VARCHAR" property="orderpaymentstatus" />
+    <result column="orderPaymentTime" jdbcType="TIMESTAMP" property="orderpaymenttime" />
     <result column="orderClientId" jdbcType="INTEGER" property="orderclientid" />
     <result column="orderDriverInfoId" jdbcType="INTEGER" property="orderdriverinfoid" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="createBy" jdbcType="VARCHAR" property="createby" />
+    <result column="isVisible" jdbcType="VARCHAR" property="isvisible" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    orderNumber, orderStatus, payment, paymentStatus, paymentTime, eventType, orderCarNumber,
-    `dateTime`, orderClientId, orderDriverInfoId
+    ID, orderNumber, orderStatus, orderPayment, orderPaymentStatus, orderPaymentTime,
+    orderClientId, orderDriverInfoId, createTime, updateTime, createBy, isVisible
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select
     <include refid="Base_Column_List" />
     from orderInfo
-    where orderNumber = #{ordernumber,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
     delete from orderInfo
-    where orderNumber = #{ordernumber,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.sspu.entity.OrderInfo">
+  <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.sspu.entity.OrderInfo" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into orderInfo (orderNumber, orderStatus, payment,
-      paymentStatus, paymentTime, eventType,
-      orderCarNumber, `dateTime`, orderClientId,
-      orderDriverInfoId)
-    values (#{ordernumber,jdbcType=VARCHAR}, #{orderstatus,jdbcType=VARCHAR}, #{payment,jdbcType=DECIMAL},
-      #{paymentstatus,jdbcType=VARCHAR}, #{paymenttime,jdbcType=TIMESTAMP}, #{eventtype,jdbcType=VARCHAR},
-      #{ordercarnumber,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, #{orderclientid,jdbcType=INTEGER},
-      #{orderdriverinfoid,jdbcType=INTEGER})
+    insert into orderInfo (orderNumber, orderStatus, orderPayment,
+      orderPaymentStatus, orderPaymentTime,
+      orderClientId, orderDriverInfoId, createTime,
+      updateTime, createBy, isVisible
+      )
+    values (#{ordernumber,jdbcType=VARCHAR}, #{orderstatus,jdbcType=VARCHAR}, #{orderpayment,jdbcType=DECIMAL},
+      #{orderpaymentstatus,jdbcType=VARCHAR}, #{orderpaymenttime,jdbcType=TIMESTAMP},
+      #{orderclientid,jdbcType=INTEGER}, #{orderdriverinfoid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
+      #{updatetime,jdbcType=TIMESTAMP}, #{createby,jdbcType=VARCHAR}, #{isvisible,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.sspu.entity.OrderInfo">
+  <insert id="insertSelective" keyColumn="ID" keyProperty="id" parameterType="com.sspu.entity.OrderInfo" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into orderInfo
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -53,29 +57,32 @@
       <if test="orderstatus != null">
         orderStatus,
       </if>
-      <if test="payment != null">
-        payment,
+      <if test="orderpayment != null">
+        orderPayment,
       </if>
-      <if test="paymentstatus != null">
-        paymentStatus,
+      <if test="orderpaymentstatus != null">
+        orderPaymentStatus,
       </if>
-      <if test="paymenttime != null">
-        paymentTime,
-      </if>
-      <if test="eventtype != null">
-        eventType,
-      </if>
-      <if test="ordercarnumber != null">
-        orderCarNumber,
-      </if>
-      <if test="datetime != null">
-        `dateTime`,
+      <if test="orderpaymenttime != null">
+        orderPaymentTime,
       </if>
       <if test="orderclientid != null">
         orderClientId,
       </if>
       <if test="orderdriverinfoid != null">
         orderDriverInfoId,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="createby != null">
+        createBy,
+      </if>
+      <if test="isvisible != null">
+        isVisible,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -85,23 +92,14 @@
       <if test="orderstatus != null">
         #{orderstatus,jdbcType=VARCHAR},
       </if>
-      <if test="payment != null">
-        #{payment,jdbcType=DECIMAL},
+      <if test="orderpayment != null">
+        #{orderpayment,jdbcType=DECIMAL},
       </if>
-      <if test="paymentstatus != null">
-        #{paymentstatus,jdbcType=VARCHAR},
+      <if test="orderpaymentstatus != null">
+        #{orderpaymentstatus,jdbcType=VARCHAR},
       </if>
-      <if test="paymenttime != null">
-        #{paymenttime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="eventtype != null">
-        #{eventtype,jdbcType=VARCHAR},
-      </if>
-      <if test="ordercarnumber != null">
-        #{ordercarnumber,jdbcType=VARCHAR},
-      </if>
-      <if test="datetime != null">
-        #{datetime,jdbcType=TIMESTAMP},
+      <if test="orderpaymenttime != null">
+        #{orderpaymenttime,jdbcType=TIMESTAMP},
       </if>
       <if test="orderclientid != null">
         #{orderclientid,jdbcType=INTEGER},
@@ -109,32 +107,38 @@
       <if test="orderdriverinfoid != null">
         #{orderdriverinfoid,jdbcType=INTEGER},
       </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="isvisible != null">
+        #{isvisible,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.sspu.entity.OrderInfo">
     <!--@mbg.generated-->
     update orderInfo
     <set>
+      <if test="ordernumber != null">
+        orderNumber = #{ordernumber,jdbcType=VARCHAR},
+      </if>
       <if test="orderstatus != null">
         orderStatus = #{orderstatus,jdbcType=VARCHAR},
       </if>
-      <if test="payment != null">
-        payment = #{payment,jdbcType=DECIMAL},
+      <if test="orderpayment != null">
+        orderPayment = #{orderpayment,jdbcType=DECIMAL},
       </if>
-      <if test="paymentstatus != null">
-        paymentStatus = #{paymentstatus,jdbcType=VARCHAR},
+      <if test="orderpaymentstatus != null">
+        orderPaymentStatus = #{orderpaymentstatus,jdbcType=VARCHAR},
       </if>
-      <if test="paymenttime != null">
-        paymentTime = #{paymenttime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="eventtype != null">
-        eventType = #{eventtype,jdbcType=VARCHAR},
-      </if>
-      <if test="ordercarnumber != null">
-        orderCarNumber = #{ordercarnumber,jdbcType=VARCHAR},
-      </if>
-      <if test="datetime != null">
-        `dateTime` = #{datetime,jdbcType=TIMESTAMP},
+      <if test="orderpaymenttime != null">
+        orderPaymentTime = #{orderpaymenttime,jdbcType=TIMESTAMP},
       </if>
       <if test="orderclientid != null">
         orderClientId = #{orderclientid,jdbcType=INTEGER},
@@ -142,46 +146,70 @@
       <if test="orderdriverinfoid != null">
         orderDriverInfoId = #{orderdriverinfoid,jdbcType=INTEGER},
       </if>
-    </set>
-    where 1=1
-      <if test="ordernumber != null">
-        and  orderNumber = #{ordernumber,jdbcType=VARCHAR}
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-    <if test="orderdriverinfoid != null">
-      and  orderDriverInfoId = #{orderdriverinfoid,jdbcType=VARCHAR}
-    </if>
-
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createby != null">
+        createBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="isvisible != null">
+        isVisible = #{isvisible,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
   </update>
-
   <update id="updateByPrimaryKey" parameterType="com.sspu.entity.OrderInfo">
     <!--@mbg.generated-->
     update orderInfo
-    set orderStatus = #{orderstatus,jdbcType=VARCHAR},
-      payment = #{payment,jdbcType=DECIMAL},
-      paymentStatus = #{paymentstatus,jdbcType=VARCHAR},
-      paymentTime = #{paymenttime,jdbcType=TIMESTAMP},
-      eventType = #{eventtype,jdbcType=VARCHAR},
-      orderCarNumber = #{ordercarnumber,jdbcType=VARCHAR},
-      `dateTime` = #{datetime,jdbcType=TIMESTAMP},
+    set orderNumber = #{ordernumber,jdbcType=VARCHAR},
+      orderStatus = #{orderstatus,jdbcType=VARCHAR},
+      orderPayment = #{orderpayment,jdbcType=DECIMAL},
+      orderPaymentStatus = #{orderpaymentstatus,jdbcType=VARCHAR},
+      orderPaymentTime = #{orderpaymenttime,jdbcType=TIMESTAMP},
       orderClientId = #{orderclientid,jdbcType=INTEGER},
-      orderDriverInfoId = #{orderdriverinfoid,jdbcType=INTEGER}
-    where orderNumber = #{ordernumber,jdbcType=VARCHAR}
+      orderDriverInfoId = #{orderdriverinfoid,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      createBy = #{createby,jdbcType=VARCHAR},
+      isVisible = #{isvisible,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
   </update>
+
+
+<!--  &amp;lt;!&amp;ndash;获取订单所有信息&amp;ndash;&amp;gt;-->
+<!--  &lt;select id="findAllOrderList" resultType="com.sspu.vo.DriverClientOrderVo"&gt;-->
+<!--    select orderNumber,payment,paymentTime,orderCarNumber,orderInfo.dateTime,clientUniqueId,driverName,-->
+<!--    case WHEN orderStatus='1' THEN "订单有效" WHEN orderStatus='-1' THEN "订单无效"  ELSE "其他" END as orderStatus,-->
+<!--    case WHEN paymentStatus='0' THEN "未缴费" WHEN paymentStatus='1' THEN "缴费成功" WHEN paymentStatus='-1' THEN "缴费失败"  ELSE "其他" END as paymentStatus-->
+<!--    from orderInfo-->
+<!--    left join driverInfo on orderInfo.orderDriverInfoId=driverInfo.driverInfoId-->
+<!--    left join clientInfo on orderInfo.orderClientId=clientInfo.clientId-->
+<!--    where 1=1-->
+<!--    &lt;if test="ordernumber != ''"&gt;-->
+<!--      and  orderInfo.orderNumber = #{ordernumber,jdbcType=VARCHAR}-->
+<!--    &lt;/if&gt;-->
+<!--    order by orderInfo.dateTime desc-->
+<!--  &lt;/select&gt;-->
 
 
   <!--获取订单所有信息-->
   <select id="findAllOrderList" resultType="com.sspu.vo.DriverClientOrderVo">
-    select orderNumber,payment,paymentTime,orderCarNumber,orderInfo.dateTime,clientUniqueId,driverName,
+    select orderInfo.ID,orderNumber,orderPayment,orderPaymentTime,driverCarNumber,clientUniqueId,driverName,applyDate,
     case WHEN orderStatus='1' THEN "订单有效" WHEN orderStatus='-1' THEN "订单无效"  ELSE "其他" END as orderStatus,
-    case WHEN paymentStatus='0' THEN "未缴费" WHEN paymentStatus='1' THEN "缴费成功" WHEN paymentStatus='-1' THEN "缴费失败"  ELSE "其他" END as paymentStatus
+    case WHEN orderPaymentStatus='0' THEN "未缴费" WHEN orderPaymentStatus='1' THEN "缴费成功" WHEN orderPaymentStatus='-1' THEN "缴费失败"  ELSE "其他" END as orderPaymentStatus,
+    case WHEN applyTime='1' THEN "6:00-9:00" WHEN applyTime='2' THEN "9:00-12:00" WHEN applyTime='3' THEN "12:00-15:00" WHEN applyTime='4' THEN "15:00-18:00" ELSE "null" end as applyTime
     from orderInfo
-    left join driverInfo on orderInfo.orderDriverInfoId=driverInfo.driverInfoId
-    left join clientInfo on orderInfo.orderClientId=clientInfo.clientId
+    left join driverInfo on orderInfo.orderDriverInfoId=driverInfo.ID
+    left join clientInfo on orderInfo.orderClientId=clientInfo.ID
     where 1=1
-    <if test="ordernumber != ''">
-      and  orderInfo.orderNumber = #{ordernumber,jdbcType=VARCHAR}
+    <if test="id != null">
+      and  orderInfo.ID = #{id,jdbcType=INTEGER},
     </if>
-    order by orderInfo.dateTime desc
+      and  orderInfo.isVisible =1
+    order by orderInfo.updateTime  desc
   </select>
 
   <!--订单无效-->
@@ -192,7 +220,7 @@
         orderStatus = #{orderstatus,jdbcType=VARCHAR},
       </if>
     </set>
-     where orderNumber = #{ordernumber,jdbcType=VARCHAR}
+     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <!--  *************************************************************************************-->
 

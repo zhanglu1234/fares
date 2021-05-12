@@ -5,13 +5,13 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface BusinessInfoMapper {
-    int deleteByPrimaryKey(Integer businessid);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(BusinessInfo record);
 
     int insertSelective(BusinessInfo record);
 
-    BusinessInfo selectByPrimaryKey(Integer businessid);
+    BusinessInfo selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(BusinessInfo record);
 

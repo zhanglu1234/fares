@@ -4,50 +4,56 @@
   <resultMap id="BaseResultMap" type="com.sspu.entity.BusinessInfo">
     <!--@mbg.generated-->
     <!--@Table businessInfo-->
-    <id column="businessId" jdbcType="INTEGER" property="businessid" />
+    <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="businessName" jdbcType="VARCHAR" property="businessname" />
     <result column="businessPassword" jdbcType="VARCHAR" property="businesspassword" />
-    <result column="dateTime" jdbcType="TIMESTAMP" property="datetime" />
     <result column="businessLoginError" jdbcType="INTEGER" property="businessloginerror" />
     <result column="businessAllowedLoginTime" jdbcType="TIMESTAMP" property="businessallowedlogintime" />
+    <result column="creatTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="isVisible" jdbcType="VARCHAR" property="isvisible" />
+    <result column="createBy" jdbcType="VARCHAR" property="createby" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    businessId, businessName, businessPassword, `dateTime`, businessLoginError, businessAllowedLoginTime
+    ID, businessName, businessPassword, businessLoginError, businessAllowedLoginTime,
+    creatTime, updateTime, isVisible, createBy
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select
     <include refid="Base_Column_List" />
     from businessInfo
-    where businessId = #{businessid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
     delete from businessInfo
-    where businessId = #{businessid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="businessId" keyProperty="businessid" parameterType="com.sspu.entity.BusinessInfo" useGeneratedKeys="true">
+  <insert id="insert" parameterType="com.sspu.entity.BusinessInfo">
     <!--@mbg.generated-->
-    insert into businessInfo (businessName, businessPassword, `dateTime`,
-      businessLoginError, businessAllowedLoginTime
-      )
-    values (#{businessname,jdbcType=VARCHAR}, #{businesspassword,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP},
-      #{businessloginerror,jdbcType=INTEGER}, #{businessallowedlogintime,jdbcType=TIMESTAMP}
-      )
+    insert into businessInfo (ID, businessName, businessPassword,
+      businessLoginError, businessAllowedLoginTime,
+      creatTime, updateTime, isVisible,
+      createBy)
+    values (#{id,jdbcType=INTEGER}, #{businessname,jdbcType=VARCHAR}, #{businesspassword,jdbcType=VARCHAR},
+      #{businessloginerror,jdbcType=INTEGER}, #{businessallowedlogintime,jdbcType=TIMESTAMP},
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{isvisible,jdbcType=VARCHAR},
+      #{createby,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="businessId" keyProperty="businessid" parameterType="com.sspu.entity.BusinessInfo" useGeneratedKeys="true">
+  <insert id="insertSelective" parameterType="com.sspu.entity.BusinessInfo">
     <!--@mbg.generated-->
     insert into businessInfo
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
       <if test="businessname != null">
         businessName,
       </if>
       <if test="businesspassword != null">
         businessPassword,
-      </if>
-      <if test="datetime != null">
-        `dateTime`,
       </if>
       <if test="businessloginerror != null">
         businessLoginError,
@@ -55,22 +61,46 @@
       <if test="businessallowedlogintime != null">
         businessAllowedLoginTime,
       </if>
+      <if test="createtime != null">
+        creatTime,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="isvisible != null">
+        isVisible,
+      </if>
+      <if test="createby != null">
+        createBy,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="businessname != null">
         #{businessname,jdbcType=VARCHAR},
       </if>
       <if test="businesspassword != null">
         #{businesspassword,jdbcType=VARCHAR},
       </if>
-      <if test="datetime != null">
-        #{datetime,jdbcType=TIMESTAMP},
-      </if>
       <if test="businessloginerror != null">
         #{businessloginerror,jdbcType=INTEGER},
       </if>
       <if test="businessallowedlogintime != null">
         #{businessallowedlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isvisible != null">
+        #{isvisible,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -84,27 +114,39 @@
       <if test="businesspassword != null">
         businessPassword = #{businesspassword,jdbcType=VARCHAR},
       </if>
-      <if test="datetime != null">
-        `dateTime` = #{datetime,jdbcType=TIMESTAMP},
-      </if>
       <if test="businessloginerror != null">
         businessLoginError = #{businessloginerror,jdbcType=INTEGER},
       </if>
       <if test="businessallowedlogintime != null">
         businessAllowedLoginTime = #{businessallowedlogintime,jdbcType=TIMESTAMP},
       </if>
+      <if test="createtime != null">
+        creatTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isvisible != null">
+        isVisible = #{isvisible,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null">
+        createBy = #{createby,jdbcType=VARCHAR},
+      </if>
     </set>
-    where businessId = #{businessid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.sspu.entity.BusinessInfo">
     <!--@mbg.generated-->
     update businessInfo
     set businessName = #{businessname,jdbcType=VARCHAR},
       businessPassword = #{businesspassword,jdbcType=VARCHAR},
-      `dateTime` = #{datetime,jdbcType=TIMESTAMP},
       businessLoginError = #{businessloginerror,jdbcType=INTEGER},
-      businessAllowedLoginTime = #{businessallowedlogintime,jdbcType=TIMESTAMP}
-    where businessId = #{businessid,jdbcType=INTEGER}
+      businessAllowedLoginTime = #{businessallowedlogintime,jdbcType=TIMESTAMP},
+      creatTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      isVisible = #{isvisible,jdbcType=VARCHAR},
+      createBy = #{createby,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
   </update>
     <select id="selectBusinessAndPassword" resultType="int">
       select count(*)

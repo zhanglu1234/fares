@@ -1,5 +1,6 @@
 server:
   port: 9999
+
 spring:
   #数据库连接配置
   datasource:
@@ -7,6 +8,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/fares?characterEncoding=utf-8&useSSL=false
     username: root
     password: 123456
+
 
 #mybatis的相关配置
 mybatis:

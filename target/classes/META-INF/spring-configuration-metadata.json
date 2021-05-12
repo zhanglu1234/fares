@@ -28,23 +28,13 @@
       "sourceType": "com.sspu.utils.JwtUtils"
     },
     {
-      "name": "path.client-id",
-      "type": "java.lang.Integer",
-      "sourceType": "com.sspu.config.Config"
-    },
-    {
-      "name": "path.driver-info-id",
-      "type": "java.lang.Integer",
-      "sourceType": "com.sspu.config.Config"
-    },
-    {
       "name": "path.file-path",
       "type": "java.lang.String",
       "sourceType": "com.sspu.config.Config"
     },
     {
-      "name": "path.order-number",
-      "type": "java.lang.String",
+      "name": "path.id",
+      "type": "java.lang.Integer",
       "sourceType": "com.sspu.config.Config"
     },
     {

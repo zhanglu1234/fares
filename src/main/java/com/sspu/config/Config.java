@@ -16,11 +16,11 @@ public class Config {
 
    private Integer pageSize;
 
-   private Integer driverInfoId;
+   private Integer id;
 
-   private String orderNumber;
-
-   private Integer clientId;
+//   private String orderNumber;
+//
+//   private Integer clientId;
 
 }
 
