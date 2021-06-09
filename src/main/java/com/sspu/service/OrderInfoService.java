@@ -24,7 +24,12 @@ public interface OrderInfoService {
 
     int updateOrderStatusByOrderNumber(OrderInfo orderInfo);
 
+    List<DriverClientOrderVo> driverFindAllOrderList(String cardNumber);
+
+    List<DriverClientOrderVo> findListBySelectedContent(String cardNumber,String orderPaymentStatus,String applyBy);
+
 }
+
 
 
 

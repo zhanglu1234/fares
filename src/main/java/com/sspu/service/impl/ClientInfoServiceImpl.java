@@ -1,5 +1,6 @@
 package com.sspu.service.impl;
 
+import com.sspu.vo.DriverClientOrderVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,21 @@ public class ClientInfoServiceImpl implements ClientInfoService {
     @Override
     public ClientInfo selectByPrimaryKey(Integer clientid) {
         return clientInfoMapper.selectByPrimaryKey(clientid);
+    }
+
+    @Override
+    public Integer selectClientIdByClientUniqueId(String clientuniqueid) {
+        return clientInfoMapper.selectClientIdByClientUniqueId(clientuniqueid);
+    }
+
+    @Override
+    public List<DriverClientOrderVo> selectInfoExaminedApplyByClient(Integer Id) {
+        return clientInfoMapper.selectInfoExaminedApplyByClient(Id);
+    }
+
+    @Override
+    public List<DriverClientOrderVo> findListBySelectedContent(String clientuniqueid, String driverapplystatus, String applyBy) {
+        return clientInfoMapper.findListBySelectedContent(clientuniqueid,driverapplystatus,applyBy);
     }
 
     @Override

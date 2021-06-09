@@ -20,7 +20,7 @@ public interface BusinessInfoService {
 
     int updateByPrimaryKey(BusinessInfo record);
 
-    int selectBusinessAndPassword(String businessname, String businesspassword);
+    BusinessInfo selectBusinessAndPassword(String businessname, String businesspassword);
 
     BusinessInfo selectBusinessInfoByBusinessName(String businessname);
 

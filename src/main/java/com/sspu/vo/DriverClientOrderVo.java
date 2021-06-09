@@ -3,7 +3,8 @@ package com.sspu.vo;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
+
 
 @Data
 public class DriverClientOrderVo {
@@ -21,6 +22,11 @@ public class DriverClientOrderVo {
     private String orderstatus;
 
     /**
+     * 申请状态
+     */
+
+    private String driverapplystatus;
+    /**
      * 缴费金额
      */
     private BigDecimal orderpayment;
@@ -34,8 +40,11 @@ public class DriverClientOrderVo {
      * 缴费时间
      */
     private Date orderpaymenttime;
+    /**
+     * 出/入园
+     */
 
-
+    private String driverapplytype;
 
     /**
      * 车牌号
@@ -43,9 +52,8 @@ public class DriverClientOrderVo {
     private String drivercarnumber;
 
 
-
     /**
-     *申请日期
+     * 申请日期
      */
     private Date applydate;
 
@@ -64,4 +72,17 @@ public class DriverClientOrderVo {
      */
     private String clientuniqueid;
 
+    /**
+     * 申请时间
+     */
+    private java.util.Date createtime;
+
+    /**
+     * 手机号码
+     */
+    private String telphone;
+    /**
+     * 身份证号码
+      */
+    private  String cardnumber;
 }

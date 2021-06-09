@@ -43,7 +43,7 @@ public class BusinessInfoServiceImpl implements BusinessInfoService {
     }
 
     @Override
-    public int selectBusinessAndPassword(String businessname, String businesspassword) {
+    public BusinessInfo selectBusinessAndPassword(String businessname, String businesspassword) {
         return businessInfoMapper.selectBusinessAndPassword(businessname, businesspassword);
     }
 

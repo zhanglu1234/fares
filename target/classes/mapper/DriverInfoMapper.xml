@@ -6,30 +6,24 @@
     <!--@Table driverInfo-->
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="driverName" jdbcType="VARCHAR" property="drivername" />
-    <result column="driverPhone" jdbcType="VARCHAR" property="driverphone" />
-    <result column="driverIdNumber" jdbcType="VARCHAR" property="driveridnumber" />
-    <result column="driverCarType" jdbcType="VARCHAR" property="drivercartype" />
-    <result column="driverCarNumber" jdbcType="VARCHAR" property="drivercarnumber" />
-    <result column="driverPictureUrl" jdbcType="VARCHAR" property="driverpictureurl" />
-    <result column="driverApplyType" jdbcType="VARCHAR" property="driverapplytype" />
-    <result column="driverApplyStatus" jdbcType="VARCHAR" property="driverapplystatus" />
-    <result column="applyDate" jdbcType="DATE" property="applydate" />
-    <result column="applyTime" jdbcType="VARCHAR" property="applytime" />
-    <result column="createBy" jdbcType="VARCHAR" property="createby" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="telphone" jdbcType="VARCHAR" property="telphone" />
+    <result column="cardNumber" jdbcType="VARCHAR" property="cardnumber" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
-    <result column="isVisible" jdbcType="VARCHAR" property="isvisible" />
+    <result column="createBy" jdbcType="VARCHAR" property="createby" />
+    <result column="isVIsible" jdbcType="VARCHAR" property="isvisible" />
+    <result column="pictureUrl" jdbcType="VARCHAR" property="pictureurl" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    ID, driverName, driverPhone, driverIdNumber, driverCarType, driverCarNumber, driverPictureUrl,
-    driverApplyType, driverApplyStatus, applyDate, applyTime, createBy, createTime, updateTime,
-    isVisible
+    ID, driverName, gender, telphone, cardNumber, createTime, updateTime, createBy, isVIsible,
+    pictureUrl
   </sql>
-<!--  根据id获取信息-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select ID,driverName,driverIdNumber,driverPhone,driverCarNumber,applyDate,applyTime, driverApplyStatus, driverApplyType, driverCarType
+    select
+    <include refid="Base_Column_List" />
     from driverInfo
     where ID = #{id,jdbcType=INTEGER}
   </select>
@@ -40,18 +34,14 @@
   </delete>
   <insert id="insert" parameterType="com.sspu.entity.DriverInfo">
     <!--@mbg.generated-->
-    insert into driverInfo (ID, driverName, driverPhone,
-      driverIdNumber, driverCarType, driverCarNumber,
-      driverPictureUrl, driverApplyType, driverApplyStatus,
-      applyDate, applyTime, createBy,
-      createTime, updateTime, isVisible
-      )
-    values (#{id,jdbcType=INTEGER}, #{drivername,jdbcType=VARCHAR}, #{driverphone,jdbcType=VARCHAR},
-      #{driveridnumber,jdbcType=VARCHAR}, #{drivercartype,jdbcType=VARCHAR}, #{drivercarnumber,jdbcType=VARCHAR},
-      #{driverpictureurl,jdbcType=VARCHAR}, #{driverapplytype,jdbcType=VARCHAR}, #{driverapplystatus,jdbcType=VARCHAR},
-      #{applydate,jdbcType=DATE}, #{applytime,jdbcType=VARCHAR}, #{createby,jdbcType=VARCHAR},
-      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{isvisible,jdbcType=VARCHAR}
-      )
+    insert into driverInfo (ID, driverName, gender,
+      telphone, cardNumber, createTime,
+      updateTime, createBy, isVIsible,
+      pictureUrl)
+    values (#{id,jdbcType=INTEGER}, #{drivername,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR},
+      #{telphone,jdbcType=VARCHAR}, #{cardnumber,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
+      #{updatetime,jdbcType=TIMESTAMP}, #{createby,jdbcType=VARCHAR}, #{isvisible,jdbcType=VARCHAR},
+      #{pictureurl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sspu.entity.DriverInfo">
     <!--@mbg.generated-->
@@ -63,35 +53,14 @@
       <if test="drivername != null">
         driverName,
       </if>
-      <if test="driverphone != null">
-        driverPhone,
+      <if test="gender != null">
+        gender,
       </if>
-      <if test="driveridnumber != null">
-        driverIdNumber,
+      <if test="telphone != null">
+        telphone,
       </if>
-      <if test="drivercartype != null">
-        driverCarType,
-      </if>
-      <if test="drivercarnumber != null">
-        driverCarNumber,
-      </if>
-      <if test="driverpictureurl != null">
-        driverPictureUrl,
-      </if>
-      <if test="driverapplytype != null">
-        driverApplyType,
-      </if>
-      <if test="driverapplystatus != null">
-        driverApplyStatus,
-      </if>
-      <if test="applydate != null">
-        applyDate,
-      </if>
-      <if test="applytime != null">
-        applyTime,
-      </if>
-      <if test="createby != null">
-        createBy,
+      <if test="cardnumber != null">
+        cardNumber,
       </if>
       <if test="createtime != null">
         createTime,
@@ -99,8 +68,14 @@
       <if test="updatetime != null">
         updateTime,
       </if>
+      <if test="createby != null">
+        createBy,
+      </if>
       <if test="isvisible != null">
-        isVisible,
+        isVIsible,
+      </if>
+      <if test="pictureurl != null">
+        pictureUrl,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -110,35 +85,14 @@
       <if test="drivername != null">
         #{drivername,jdbcType=VARCHAR},
       </if>
-      <if test="driverphone != null">
-        #{driverphone,jdbcType=VARCHAR},
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
       </if>
-      <if test="driveridnumber != null">
-        #{driveridnumber,jdbcType=VARCHAR},
+      <if test="telphone != null">
+        #{telphone,jdbcType=VARCHAR},
       </if>
-      <if test="drivercartype != null">
-        #{drivercartype,jdbcType=VARCHAR},
-      </if>
-      <if test="drivercarnumber != null">
-        #{drivercarnumber,jdbcType=VARCHAR},
-      </if>
-      <if test="driverpictureurl != null">
-        #{driverpictureurl,jdbcType=VARCHAR},
-      </if>
-      <if test="driverapplytype != null">
-        #{driverapplytype,jdbcType=VARCHAR},
-      </if>
-      <if test="driverapplystatus != null">
-        #{driverapplystatus,jdbcType=VARCHAR},
-      </if>
-      <if test="applydate != null">
-        #{applydate,jdbcType=DATE},
-      </if>
-      <if test="applytime != null">
-        #{applytime,jdbcType=VARCHAR},
-      </if>
-      <if test="createby != null">
-        #{createby,jdbcType=VARCHAR},
+      <if test="cardnumber != null">
+        #{cardnumber,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -146,8 +100,14 @@
       <if test="updatetime != null">
         #{updatetime,jdbcType=TIMESTAMP},
       </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
+      </if>
       <if test="isvisible != null">
         #{isvisible,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureurl != null">
+        #{pictureurl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -158,35 +118,14 @@
       <if test="drivername != null">
         driverName = #{drivername,jdbcType=VARCHAR},
       </if>
-      <if test="driverphone != null">
-        driverPhone = #{driverphone,jdbcType=VARCHAR},
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
       </if>
-      <if test="driveridnumber != null">
-        driverIdNumber = #{driveridnumber,jdbcType=VARCHAR},
+      <if test="telphone != null">
+        telphone = #{telphone,jdbcType=VARCHAR},
       </if>
-      <if test="drivercartype != null">
-        driverCarType = #{drivercartype,jdbcType=VARCHAR},
-      </if>
-      <if test="drivercarnumber != null">
-        driverCarNumber = #{drivercarnumber,jdbcType=VARCHAR},
-      </if>
-      <if test="driverpictureurl != null">
-        driverPictureUrl = #{driverpictureurl,jdbcType=VARCHAR},
-      </if>
-      <if test="driverapplytype != null">
-        driverApplyType = #{driverapplytype,jdbcType=VARCHAR},
-      </if>
-      <if test="driverapplystatus != null">
-        driverApplyStatus = #{driverapplystatus,jdbcType=VARCHAR},
-      </if>
-      <if test="applydate != null">
-        applyDate = #{applydate,jdbcType=DATE},
-      </if>
-      <if test="applytime != null">
-        applyTime = #{applytime,jdbcType=VARCHAR},
-      </if>
-      <if test="createby != null">
-        createBy = #{createby,jdbcType=VARCHAR},
+      <if test="cardnumber != null">
+        cardNumber = #{cardnumber,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -194,8 +133,14 @@
       <if test="updatetime != null">
         updateTime = #{updatetime,jdbcType=TIMESTAMP},
       </if>
+      <if test="createby != null">
+        createBy = #{createby,jdbcType=VARCHAR},
+      </if>
       <if test="isvisible != null">
-        isVisible = #{isvisible,jdbcType=VARCHAR},
+        isVIsible = #{isvisible,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureurl != null">
+        pictureUrl = #{pictureurl,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
@@ -204,56 +149,31 @@
     <!--@mbg.generated-->
     update driverInfo
     set driverName = #{drivername,jdbcType=VARCHAR},
-      driverPhone = #{driverphone,jdbcType=VARCHAR},
-      driverIdNumber = #{driveridnumber,jdbcType=VARCHAR},
-      driverCarType = #{drivercartype,jdbcType=VARCHAR},
-      driverCarNumber = #{drivercarnumber,jdbcType=VARCHAR},
-      driverPictureUrl = #{driverpictureurl,jdbcType=VARCHAR},
-      driverApplyType = #{driverapplytype,jdbcType=VARCHAR},
-      driverApplyStatus = #{driverapplystatus,jdbcType=VARCHAR},
-      applyDate = #{applydate,jdbcType=DATE},
-      applyTime = #{applytime,jdbcType=VARCHAR},
-      createBy = #{createby,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      cardNumber = #{cardnumber,jdbcType=VARCHAR},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP},
-      isVisible = #{isvisible,jdbcType=VARCHAR}
+      createBy = #{createby,jdbcType=VARCHAR},
+      isVIsible = #{isvisible,jdbcType=VARCHAR},
+      pictureUrl = #{pictureurl,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectAllByDriverIdNumber" resultMap="BaseResultMap">
+  <select id="findAllDriverInfo" resultMap="BaseResultMap">
     select *
-    from driverInfo
-    where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
-  </select>
-<!--小程序根据条件筛选信息-->
-  <select id="listBySelectedContent" resultMap="BaseResultMap">
-    select *
-    from driverInfo
-    where driverIdNumber = #{driveridnumber,jdbcType=VARCHAR}
-    <if test="driverorderstatus == '已提交申请'">
-      and  driverOrderStatus=#{driverorderstatus,jdbcType=VARCHAR}
-    </if>
-    <if test="driverorderstatus == '已审核'">
-      and  driverOrderStatus=#{driverorderstatus,jdbcType=VARCHAR}
-    </if>
-    <if test="orderBy == 'DESC'">
-      order by applyTime ${orderBy}
-    </if>
-  </select>
-
-
-  <select id="findAllDriverApplyInfo" resultMap="BaseResultMap">
-    select ID,driverName,driverIdNumber,driverPhone,driverCarNumber,applyDate,isVisible,
-    case WHEN driverApplyStatus='0' THEN "已提交申请" WHEN driverApplyStatus='1' THEN "审核中" WHEN driverApplyStatus='2' THEN "审核完成" WHEN driverApplyStatus='-1' THEN "申请无效" ELSE "其他" END as driverApplyStatus,
-    case when driverApplyType='1' then "已入园" when driverApplyType='2' then "已出园" else "其他" end as driverApplyType,
-    case WHEN driverCarType='1' THEN "卡车" WHEN driverCarType='2' THEN "货车" WHEN driverCarType='3' THEN "汽车" ELSE "其他" END as driverCarType,
-    case WHEN applyTime='1' THEN "6:00-9:00" WHEN applyTime='2' THEN "9:00-12:00" WHEN applyTime='3' THEN "12:00-15:00" WHEN applyTime='4' THEN "15:00-18:00" ELSE "null" end as applyTime
     from driverInfo
     where 1=1
-    <if test="id !=null">
-      and  ID=#{id,jdbcType=INTEGER}
+    <if test="id != null">
+      and ID = #{id,jdbcType=INTEGER}
     </if>
-    and isVisible =1
-    order by createTime desc
+    and  isVisible = 1
+  </select>
+
+  <select id="selectDriverInfoByCardNumber" resultMap="BaseResultMap">
+    SELECT *
+    from driverInfo
+    WHERE cardNumber = #{cardnumber,jdbcType=VARCHAR}
+    limit 1
   </select>
 </mapper>

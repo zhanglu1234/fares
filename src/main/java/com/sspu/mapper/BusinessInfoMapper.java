@@ -2,6 +2,7 @@ package com.sspu.mapper;
 
 import com.sspu.entity.BusinessInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface BusinessInfoMapper {
@@ -17,7 +18,7 @@ public interface BusinessInfoMapper {
 
     int updateByPrimaryKey(BusinessInfo record);
 
-    int selectBusinessAndPassword(String businessname, String businesspassword);
+    BusinessInfo selectBusinessAndPassword(@Param("businessname") String businessname, @Param("businesspassword") String businesspassword);
 
     BusinessInfo selectBusinessInfoByBusinessName(String businessname);
 }

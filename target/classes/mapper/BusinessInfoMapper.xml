@@ -148,14 +148,17 @@
       createBy = #{createby,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
-    <select id="selectBusinessAndPassword" resultType="int">
-      select count(*)
+    <select id="selectBusinessAndPassword" resultType="com.sspu.entity.BusinessInfo">
+      select *
       from businessInfo
-      where businessName = #{businessname,jdbcType=VARCHAR} and businessPassword = #{businesspassword,jdbcType=VARCHAR}
+      where businessName = #{businessname,jdbcType=VARCHAR}
+      and businessPassword = #{businesspassword,jdbcType=VARCHAR}
+      limit 1
     </select>
   <select id="selectBusinessInfoByBusinessName" resultMap="BaseResultMap">
     select *
     from businessInfo
     where businessName = #{businessname,jdbcType=VARCHAR}
+    limit 1
   </select>
 </mapper>

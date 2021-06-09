@@ -8,8 +8,11 @@ import lombok.Data;
  * order_info
  */
 @Data
-public class OrderInfo extends BaseInfo{
-
+public class OrderInfo extends BaseInfo {
+//    /**
+//     * ID
+//     */
+//    private Integer id;
 
     /**
      * 订单号
@@ -17,7 +20,7 @@ public class OrderInfo extends BaseInfo{
     private String ordernumber;
 
     /**
-     * 订单状态:-1订单无效，1订单有效
+     * 订单状态:-1订单无效，0申请入园，1审核订单，2同意申请
      */
     private String orderstatus;
 
@@ -42,9 +45,27 @@ public class OrderInfo extends BaseInfo{
     private Integer orderclientid;
 
     /**
-     * 司机id
+     * 申请id
      */
-    private Integer orderdriverinfoid;
+    private Integer orderapplyinfoid;
 
-
+//    /**
+//     * 创建时间
+//     */
+//    private Date createtime;
+//
+//    /**
+//     * 更新时间
+//     */
+//    private Date updatetime;
+//
+//    /**
+//     * 创建人
+//     */
+//    private String createby;
+//
+//    /**
+//     * 是否可见
+//     */
+//    private String isvisible;
 }

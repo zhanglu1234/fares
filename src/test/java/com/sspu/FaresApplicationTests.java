@@ -1,9 +1,6 @@
 package com.sspu;
 
 import com.sspu.config.Config;
-import com.sspu.entity.ClientInfo;
-import com.sspu.entity.DriverInfo;
-import com.sspu.entity.OrderInfo;
 import com.sspu.mapper.ClientInfoMapper;
 import com.sspu.mapper.DriverInfoMapper;
 import com.sspu.mapper.OrderInfoMapper;
@@ -15,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @SpringBootTest
 class FaresApplicationTests {

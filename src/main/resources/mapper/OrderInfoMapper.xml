@@ -11,7 +11,7 @@
     <result column="orderPaymentStatus" jdbcType="VARCHAR" property="orderpaymentstatus" />
     <result column="orderPaymentTime" jdbcType="TIMESTAMP" property="orderpaymenttime" />
     <result column="orderClientId" jdbcType="INTEGER" property="orderclientid" />
-    <result column="orderDriverInfoId" jdbcType="INTEGER" property="orderdriverinfoid" />
+    <result column="orderApplyInfoId" jdbcType="INTEGER" property="orderapplyinfoid" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="createBy" jdbcType="VARCHAR" property="createby" />
@@ -20,7 +20,7 @@
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     ID, orderNumber, orderStatus, orderPayment, orderPaymentStatus, orderPaymentTime,
-    orderClientId, orderDriverInfoId, createTime, updateTime, createBy, isVisible
+    orderClientId, orderApplyInfoId, createTime, updateTime, createBy, isVisible
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -38,12 +38,12 @@
     <!--@mbg.generated-->
     insert into orderInfo (orderNumber, orderStatus, orderPayment,
       orderPaymentStatus, orderPaymentTime,
-      orderClientId, orderDriverInfoId, createTime,
+      orderClientId, orderApplyInfoId, createTime,
       updateTime, createBy, isVisible
       )
     values (#{ordernumber,jdbcType=VARCHAR}, #{orderstatus,jdbcType=VARCHAR}, #{orderpayment,jdbcType=DECIMAL},
       #{orderpaymentstatus,jdbcType=VARCHAR}, #{orderpaymenttime,jdbcType=TIMESTAMP},
-      #{orderclientid,jdbcType=INTEGER}, #{orderdriverinfoid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
+      #{orderclientid,jdbcType=INTEGER}, #{orderapplyinfoid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
       #{updatetime,jdbcType=TIMESTAMP}, #{createby,jdbcType=VARCHAR}, #{isvisible,jdbcType=VARCHAR}
       )
   </insert>
@@ -69,8 +69,8 @@
       <if test="orderclientid != null">
         orderClientId,
       </if>
-      <if test="orderdriverinfoid != null">
-        orderDriverInfoId,
+      <if test="orderapplyinfoid != null">
+        orderApplyInfoId,
       </if>
       <if test="createtime != null">
         createTime,
@@ -104,8 +104,8 @@
       <if test="orderclientid != null">
         #{orderclientid,jdbcType=INTEGER},
       </if>
-      <if test="orderdriverinfoid != null">
-        #{orderdriverinfoid,jdbcType=INTEGER},
+      <if test="orderapplyinfoid != null">
+        #{orderapplyinfoid,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -143,8 +143,8 @@
       <if test="orderclientid != null">
         orderClientId = #{orderclientid,jdbcType=INTEGER},
       </if>
-      <if test="orderdriverinfoid != null">
-        orderDriverInfoId = #{orderdriverinfoid,jdbcType=INTEGER},
+      <if test="orderapplyinfoid != null">
+        orderApplyInfoId = #{orderapplyinfoid,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -170,7 +170,7 @@
       orderPaymentStatus = #{orderpaymentstatus,jdbcType=VARCHAR},
       orderPaymentTime = #{orderpaymenttime,jdbcType=TIMESTAMP},
       orderClientId = #{orderclientid,jdbcType=INTEGER},
-      orderDriverInfoId = #{orderdriverinfoid,jdbcType=INTEGER},
+      orderApplyInfoId = #{orderapplyinfoid,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP},
       createBy = #{createby,jdbcType=VARCHAR},
@@ -178,37 +178,22 @@
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
-
-<!--  &amp;lt;!&amp;ndash;获取订单所有信息&amp;ndash;&amp;gt;-->
-<!--  &lt;select id="findAllOrderList" resultType="com.sspu.vo.DriverClientOrderVo"&gt;-->
-<!--    select orderNumber,payment,paymentTime,orderCarNumber,orderInfo.dateTime,clientUniqueId,driverName,-->
-<!--    case WHEN orderStatus='1' THEN "订单有效" WHEN orderStatus='-1' THEN "订单无效"  ELSE "其他" END as orderStatus,-->
-<!--    case WHEN paymentStatus='0' THEN "未缴费" WHEN paymentStatus='1' THEN "缴费成功" WHEN paymentStatus='-1' THEN "缴费失败"  ELSE "其他" END as paymentStatus-->
-<!--    from orderInfo-->
-<!--    left join driverInfo on orderInfo.orderDriverInfoId=driverInfo.driverInfoId-->
-<!--    left join clientInfo on orderInfo.orderClientId=clientInfo.clientId-->
-<!--    where 1=1-->
-<!--    &lt;if test="ordernumber != ''"&gt;-->
-<!--      and  orderInfo.orderNumber = #{ordernumber,jdbcType=VARCHAR}-->
-<!--    &lt;/if&gt;-->
-<!--    order by orderInfo.dateTime desc-->
-<!--  &lt;/select&gt;-->
-
-
-  <!--获取订单所有信息-->
+<!--  后台获取订单所有信息-->
   <select id="findAllOrderList" resultType="com.sspu.vo.DriverClientOrderVo">
-    select orderInfo.ID,orderNumber,orderPayment,orderPaymentTime,driverCarNumber,clientUniqueId,driverName,applyDate,
-    case WHEN orderStatus='1' THEN "订单有效" WHEN orderStatus='-1' THEN "订单无效"  ELSE "其他" END as orderStatus,
-    case WHEN orderPaymentStatus='0' THEN "未缴费" WHEN orderPaymentStatus='1' THEN "缴费成功" WHEN orderPaymentStatus='-1' THEN "缴费失败"  ELSE "其他" END as orderPaymentStatus,
-    case WHEN applyTime='1' THEN "6:00-9:00" WHEN applyTime='2' THEN "9:00-12:00" WHEN applyTime='3' THEN "12:00-15:00" WHEN applyTime='4' THEN "15:00-18:00" ELSE "null" end as applyTime
-    from orderInfo
-    left join driverInfo on orderInfo.orderDriverInfoId=driverInfo.ID
-    left join clientInfo on orderInfo.orderClientId=clientInfo.ID
+    SELECT orderInfo.ID,orderNumber,orderPaymentTime,driverName,driverCarNumber,applyDate,clientUniqueId,applyTime,driverApplyType,orderStatus,orderPaymentStatus,
+<!--    case WHEN applyTime='1' THEN "6:00-9:00" WHEN applyTime='2' THEN "9:00-12:00" WHEN applyTime='3' THEN "12:00-15:00" WHEN applyTime='4' THEN "15:00-18:00" ELSE "null" END as applyTime,-->
+<!--    case WHEN driverApplyType='1'THEN "出园" WHEN driverApplyType='2'THEN "入园" ELSE "null" END as driverApplyType,-->
+<!--    case WHEN orderStatus='1' THEN "订单有效" WHEN orderStatus='-1' THEN "订单无效"  ELSE "其他" END as orderStatus,-->
+<!--    case WHEN orderPaymentStatus='0' THEN "未缴费" WHEN orderPaymentStatus='1' THEN "缴费成功" WHEN orderPaymentStatus='-1' THEN "缴费失败"  ELSE "其他" END as orderPaymentStatus,-->
+    case WHEN driverCarType='1' THEN 20 WHEN driverCarType='2' THEN 30 WHEN driverCarType='3' THEN 40 ELSE null END as orderPayment
+    FROM orderInfo
+    LEFT JOIN clientInfo on orderInfo.orderClientId=clientInfo.ID
+    INNER JOIN (SELECT applyInfo.ID,driverName,driverCarNumber,applyDate,applyTime,driverApplyType,driverApplyStatus,driverCarType FROM applyInfo LEFT JOIN driverInfo on applyInfo.driverId=driverInfo.ID)as applyInfo ON applyInfo.ID=orderInfo.orderApplyInfoId
     where 1=1
     <if test="id != null">
-      and  orderInfo.ID = #{id,jdbcType=INTEGER},
+      and  orderInfo.ID = #{id,jdbcType=INTEGER}
     </if>
-      and  orderInfo.isVisible =1
+    and  orderInfo.isVisible =1
     order by orderInfo.updateTime  desc
   </select>
 
@@ -222,6 +207,47 @@
     </set>
      where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <!--  *************************************************************************************-->
 
+<!--  小程序获取所有订单信息-->
+  <select id="driverFindAllOrderList" resultType="com.sspu.vo.DriverClientOrderVo">
+    SELECT orderNumber,driverName,driverCarNumber,applyDate,createTime,orderPaymentStatus,orderPaymentTime,cardNumber,telphone,applyTime,
+<!--	case WHEN applyTime='1' THEN "6:00-9:00" WHEN applyTime='2' THEN "9:00-12:00" WHEN applyTime='3' THEN "12:00-15:00" WHEN applyTime='4' THEN "15:00-18:00" ELSE "null" END as applyTime,-->
+	case WHEN driverCarType='1' THEN 20 WHEN driverCarType='2' THEN 30 WHEN driverCarType='3' THEN 40 ELSE null END as orderPayment
+    FROM orderInfo
+    INNER JOIN (SELECT applyInfo.ID,driverName,driverCarNumber,applyDate,applyTime,driverApplyType,driverId,cardNumber,driverCarType,telphone FROM applyInfo LEFT JOIN driverInfo on applyInfo.driverId=driverInfo.ID)as applyInfo ON applyInfo.ID=orderInfo.orderApplyInfoId
+    where 1=1
+	and  driverid=(SELECT id from driverInfo
+        WHERE
+        <if test="cardnumber != null" >
+            cardNumber = #{cardnumber,jdbcType=VARCHAR}
+        </if>
+        LIMIT 1)
+    and  orderInfo.isVisible =1
+    order by orderInfo.updateTime  desc
+  </select>
+
+<!--  小程序筛选订单信息-->
+  <select id="findListBySelectedContent" resultType="com.sspu.vo.DriverClientOrderVo">
+    SELECT orderNumber,driverName,driverCarNumber,applyDate,createTime,orderPaymentStatus,orderPaymentTime,cardNumber,telphone,applyTime,
+<!--    case WHEN applyTime='1' THEN "6:00-9:00" WHEN applyTime='2' THEN "9:00-12:00" WHEN applyTime='3' THEN "12:00-15:00" WHEN applyTime='4' THEN "15:00-18:00" ELSE "null" END as applyTime,-->
+    case WHEN driverCarType='1' THEN 20 WHEN driverCarType='2' THEN 30 WHEN driverCarType='3' THEN 40 ELSE null END as orderPayment
+    FROM orderInfo
+    INNER JOIN (SELECT applyInfo.ID,driverName,driverCarNumber,applyDate,applyTime,driverApplyType,driverId,cardNumber,driverCarType,telphone FROM applyInfo LEFT JOIN driverInfo on applyInfo.driverId=driverInfo.ID)as applyInfo ON applyInfo.ID=orderInfo.orderApplyInfoId
+    where 1=1
+    and  driverid=(SELECT id from driverInfo
+        WHERE
+        <if test="cardnumber != null" >
+          cardNumber = #{cardnumber,jdbcType=VARCHAR}
+        </if>
+        LIMIT 1)
+    <if test="orderpaymentstatus!='2'.toString() ">
+      and orderPaymentStatus = #{orderpaymentstatus,jdbcType=VARCHAR}
+    </if>
+    and  orderInfo.isVisible =1
+    <if test="applyBy !=null " >
+     ORDER BY createTime ${applyBy}
+    </if>
+
+
+  </select>
 </mapper>

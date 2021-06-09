@@ -193,5 +193,56 @@
     select *
     from clientInfo
     where clientUniqueId = #{clientuniqueid,jdbcType=VARCHAR}
+    limit 1
     </select>
+
+
+
+  <select id="selectInfoExaminedApplyByClient" resultType="com.sspu.vo.DriverClientOrderVo">
+    SELECT applyInfo.ID,driverName,applyDate,driverCarNumber,orderClientId,applyInfo.createTime,telphone,driverCarType,driverApplyType,applyTime,driverApplyStatus
+<!--	case WHEN driverCarType='1'THEN "卡车" WHEN driverCarType='2'THEN "货车" WHEN driverCarType='3'THEN "汽车" ELSE "null" END as driverCarType,-->
+<!--    case WHEN driverApplyType='1'THEN "出园" WHEN driverApplyType='2'THEN "入园" ELSE "null" END as driverApplyType,-->
+<!--    case WHEN applyTime='1' THEN "6:00-9:00" WHEN applyTime='2' THEN "9:00-12:00" WHEN applyTime='3' THEN "12:00-15:00" WHEN applyTime='4' THEN "15:00-18:00" ELSE "null" END as applyTime,-->
+<!--    case WHEN driverApplyStatus='0'then "已提交申请" WHEN driverApplyStatus='1'then "审核中" WHEN driverApplyStatus='2'then "审核已完成" WHEN driverApplyStatus='-1'then "申请无效" END as driverApplyStatus-->
+	from orderInfo
+	LEFT JOIN applyInfo on applyInfo.ID=orderInfo. orderApplyInfoId
+	INNER JOIN
+	    (SELECT driverName,applyInfo.ID,applyInfo.createTime,telphone FROM applyInfo
+		LEFT JOIN driverInfo on applyInfo.driverId=driverInfo.ID)as newInfo ON newInfo.ID=orderInfo.orderApplyInfoId
+	WHERE orderClientId =  #{Id,jdbcType=INTEGER}
+	and applyInfo.isVisible=1
+	and driverApplytype='1'
+  </select>
+
+  <select id="selectClientIdByClientUniqueId" resultType="java.lang.Integer">
+    select ID
+    from clientInfo
+    where clientUniqueId=#{clientuniqueid,jdbcType=VARCHAR}
+    limit 1
+  </select>
+
+  <select id="findListBySelectedContent" resultType="com.sspu.vo.DriverClientOrderVo">
+     SELECT applyInfo.ID,driverName,applyDate,driverCarNumber,orderClientId,applyInfo.createTime,telphone,driverCarType,driverApplyType,applyTime,driverApplyStatus
+<!--	case WHEN driverCarType='1'THEN "卡车" WHEN driverCarType='2'THEN "货车" WHEN driverCarType='3'THEN "汽车" ELSE "null" END as driverCarType,-->
+<!--    case WHEN driverApplyType='1'THEN "出园" WHEN driverApplyType='2'THEN "入园" ELSE "null" END as driverApplyType,-->
+<!--    case WHEN applyTime='1' THEN "6:00-9:00" WHEN applyTime='2' THEN "9:00-12:00" WHEN applyTime='3' THEN "12:00-15:00" WHEN applyTime='4' THEN "15:00-18:00" ELSE "null" END as applyTime,-->
+<!--    case WHEN driverApplyStatus='0'then "已提交申请" WHEN driverApplyStatus='1'then "审核中" WHEN driverApplyStatus='2'then "审核已完成" WHEN driverApplyStatus='-1'then "申请无效" END as driverApplyStatus-->
+	from orderInfo
+	LEFT JOIN applyInfo on applyInfo.ID=orderInfo. orderApplyInfoId
+	INNER JOIN
+	    (SELECT driverName,applyInfo.ID,applyInfo.createTime,telphone FROM applyInfo
+		LEFT JOIN driverInfo on applyInfo.driverId=driverInfo.ID)as newInfo ON newInfo.ID=orderInfo.orderApplyInfoId
+	WHERE orderClientId = (SELECT ID FROM clientInfo WHERE
+            <if test="clientuniqueid != null" >
+                clientuniqueid = #{clientuniqueid,jdbcType=VARCHAR}
+            </if>
+            limit 1)
+    <if test="driverapplystatus != '3'.toString() " >
+      and  driverApplyStatus = #{driverapplystatus,jdbcType=VARCHAR}
+    </if>
+    and driverApplytype='1'
+    <if test="applyBy !=null " >
+    ORDER BY createTime ${applyBy}
+    </if>
+  </select>
 </mapper>

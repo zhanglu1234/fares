@@ -2,7 +2,9 @@ package com.sspu.mapper;
 
 import com.sspu.entity.OrderInfo;import com.sspu.vo.DriverClientOrderVo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
+
 @Mapper
 public interface OrderInfoMapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,5 +23,7 @@ public interface OrderInfoMapper {
 
     int updateOrderStatusByOrderNumber(OrderInfo orderInfo);
 
+    List<DriverClientOrderVo> driverFindAllOrderList(@Param("cardnumber") String cardnumber);
 
+    List<DriverClientOrderVo> findListBySelectedContent(@Param("cardnumber") String cardnumber, @Param("orderpaymentstatus") String orderpaymentstatus, @Param("applyBy") String applyBy);
 }

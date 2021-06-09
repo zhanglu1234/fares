@@ -59,8 +59,16 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         return orderInfoMapper.updateOrderStatusByOrderNumber(orderInfo);
     }
 
+    public List<DriverClientOrderVo> driverFindAllOrderList(String cardNumber){
+        return orderInfoMapper.driverFindAllOrderList(cardNumber);
+    }
+
+    public List<DriverClientOrderVo> findListBySelectedContent(String cardNumber,String orderPaymentStatus,String applyBy){
+        return orderInfoMapper.findListBySelectedContent(cardNumber,orderPaymentStatus,applyBy);
+    }
 
 }
+
 
 
 
